@@ -1,16 +1,14 @@
 package com.solaredge.diagnostictool;
 
-import android.os.Bundle;
-import android.view.Menu;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import android.os.Bundle;
+
+public class TestFotocamera extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test_fotocamera);
     }
-
-
 }
