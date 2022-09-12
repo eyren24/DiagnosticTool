@@ -2,15 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/page_1"
-        android:enabled="true"
+        android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        app:showAsAction="ifRoom"
-        android:title="TODO" />
+        android:title="search"
+        android:contentDescription="content_description_search"
+        app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/page_2"
-        android:enabled="true"
+        android:id="@+id/camera"
+        android:icon="@drawable/ic_baseline_camera_24"
+        android:title="camera"
+        android:contentDescription="content_description_camera"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_baseline_camera_alt_24"
-        android:title="TODO" />
+        />
 </menu>
