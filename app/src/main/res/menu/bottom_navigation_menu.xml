@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/camera"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:title="Camera"/>
+    <item
+        android:id="@+id/some"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_headset_24"
+        android:title="SomeThing"/>
+</menu>
