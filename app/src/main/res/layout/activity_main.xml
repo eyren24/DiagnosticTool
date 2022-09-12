@@ -15,5 +15,60 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="225dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="104dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/akronim"
+        android:shadowColor="@color/white"
+        android:text="Phone"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintStart_toStartOf="@+id/videoView"
+        app:layout_constraintTop_toTopOf="@+id/videoView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="225dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="32dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/akronim"
+        android:shadowColor="@color/white"
+        android:text="HOSPITAL"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="@+id/videoView"
+        app:layout_constraintTop_toTopOf="@+id/videoView" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="413dp"
+        android:layout_height="370dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        app:menu="@menu/navigation_drawer"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
