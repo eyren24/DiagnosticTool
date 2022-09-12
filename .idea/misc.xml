@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1935" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1935" />
         <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_search_24dp.xml" value="0.1935" />
         <entry key="..\:/DiagnosticTool/app/src/main/res/layout/activity_main.xml" value="0.22239583333333332" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/menu/bottom_app_bar.xml" value="0.23645833333333333" />
         <entry key="..\:/DiagnosticTool/app/src/main/res/menu/menu.xml" value="0.23645833333333333" />
       </map>
     </option>
