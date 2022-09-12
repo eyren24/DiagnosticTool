@@ -59,18 +59,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.561" />
 
-    <SurfaceView
-        android:id="@+id/previewView"
-        android:layout_width="240dp"
-        android:layout_height="231dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
-
-
+    <LinearLayout
+        android:layout_width="288dp"
+        android:layout_height="288dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="152dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
