@@ -44,6 +44,14 @@ import java.util.concurrent.Executor;
 
 public class TestFotocamera extends AppCompatActivity {
 
+    // Camera Var
+    protected CameraDevice cameraDevice;
+    protected CameraManager cameraManager;
+    private CameraCaptureSession cameraCaptureSession;
+    private String cameraID;
+    private TextureView textureView;
+    private CaptureRequest.Builder captureRequestBuilder;
+
     private ExtendedFloatingActionButton extendedFab;
 
     // Double click to go home
@@ -59,6 +67,13 @@ public class TestFotocamera extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_fotocamera);
+
+        // Get texure view from UI
+        textureView = findViewById(R.id.textureView);
+        // Get camera manager
+        cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
+        // Start camera
+        openCamera();
 
         // Get camera switch from UI
         frontBackCam = findViewById(R.id.switchMaterial);
@@ -97,11 +112,74 @@ public class TestFotocamera extends AppCompatActivity {
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cameraPreview();
                 camera_button.setVisibility(View.GONE);
             }
         });
     }
 
+
+    // State Callback
+    private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+        @Override
+        public void onOpened(@NonNull CameraDevice camera) {
+            cameraDevice = camera;
+        }
+
+        @Override
+        public void onDisconnected(@NonNull CameraDevice cameraDevice) {
+            cameraDevice.close();
+        }
+
+        @Override
+        public void onError(@NonNull CameraDevice cameraDevice, int i) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    };
+
+    // Start camera
+    private void openCamera(){
+        ActivityCompat.requestPermissions(TestFotocamera.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        try {
+            cameraID = cameraManager.getCameraIdList()[0];
+            cameraManager.openCamera(cameraID, stateCallback, null);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Start the preview
+    private void cameraPreview(){
+        SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
+        Surface surface = new Surface(surfaceTexture);
+        try {
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            captureRequestBuilder.addTarget(surface);
+            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback(){
+            @Override
+                public void onConfigured(@NonNull CameraCaptureSession session) {
+                    cameraCaptureSession = session;
+                    captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+                    try{
+                        cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, null);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+
+                }
+            }, null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     // Back android button
     @Override
