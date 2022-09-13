@@ -6,9 +6,10 @@
         <menu>
             <item
                 android:id="@+id/camera"
+                android:checkable="true"
                 android:icon="@drawable/ncam"
-                android:title="Camera"
-                android:checkable="true"/>
+                android:onClick="cameraPreview"
+                android:title="Camera" />
             <item
                 android:id="@+id/accellerometro"
                 android:icon="@drawable/nacc"
