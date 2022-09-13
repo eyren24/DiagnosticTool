@@ -8,14 +8,6 @@
     tools:context=".MainActivity">
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
-
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
@@ -61,15 +53,14 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="410dp"
-        android:layout_height="562dp"
+        android:layout_height="530dp"
         android:background="#03A9F4"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.668"
+        app:layout_constraintTop_toBottomOf="@+id/videoView"
         app:menu="@menu/navigation_drawer"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
