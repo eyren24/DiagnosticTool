@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/main_item"
-        android:title="Scegli:">
+        android:title="select:">
         <menu>
             <item
                 android:id="@+id/camera"
