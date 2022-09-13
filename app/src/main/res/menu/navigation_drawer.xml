@@ -8,7 +8,6 @@
                 android:id="@+id/camera"
                 android:checkable="true"
                 android:icon="@drawable/ncam"
-                android:onClick="cameraPreview"
                 android:title="Camera" />
             <item
                 android:id="@+id/accellerometro"
