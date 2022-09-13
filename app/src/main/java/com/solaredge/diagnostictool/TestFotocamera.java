@@ -57,13 +57,10 @@ public class TestFotocamera extends AppCompatActivity {
     // Double click to go home
     private int click=0;
 
-    private Button camera_button;
-
     private SwitchMaterial frontBackCam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_fotocamera);
@@ -72,14 +69,15 @@ public class TestFotocamera extends AppCompatActivity {
         textureView = findViewById(R.id.textureView);
         // Get camera manager
         cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
-        // Start camera
-        openCamera();
-
         // Get camera switch from UI
         frontBackCam = findViewById(R.id.switchMaterial);
+        frontBackCam.setChecked(true);
 
-        // Get camera button from UI
-        camera_button = findViewById(R.id.open_camera);
+        try {
+            openCamera(cameraManager.getCameraIdList()[0]);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
 
         // Button home animation
         extendedFab = findViewById(R.id.extended_fab);
@@ -94,26 +92,28 @@ public class TestFotocamera extends AppCompatActivity {
                 }
             }
         });
-        // Switch button cam
+
+
         frontBackCam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
-                    // Back camera
-
-                }else {
-                    // Front camre
-
+                    // back
+                    try {
+                        cameraCaptureSession.close();
+                        openCamera(cameraManager.getCameraIdList()[0]);
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    // front
+                    try {
+                        cameraCaptureSession.close();
+                        openCamera(cameraManager.getCameraIdList()[1]);
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
-
-        // Show Camera
-        camera_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cameraPreview();
-                camera_button.setVisibility(View.GONE);
             }
         });
     }
@@ -123,7 +123,9 @@ public class TestFotocamera extends AppCompatActivity {
     private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
+            closeCameraDevice();
             cameraDevice = camera;
+            cameraPreview();
         }
 
         @Override
@@ -138,14 +140,22 @@ public class TestFotocamera extends AppCompatActivity {
         }
     };
 
+    // CLose camera?
+    private void closeCameraDevice() {
+        if (cameraDevice != null) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    }
+
     // Start camera
-    private void openCamera(){
+    private void openCamera(String camNum){
         ActivityCompat.requestPermissions(TestFotocamera.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         try {
-            cameraID = cameraManager.getCameraIdList()[0];
+            cameraID = camNum;
             cameraManager.openCamera(cameraID, stateCallback, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
