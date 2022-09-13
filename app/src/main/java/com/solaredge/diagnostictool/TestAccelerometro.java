@@ -52,6 +52,7 @@ public class TestAccelerometro extends AppCompatActivity  implements SensorEvent
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             ((TextView) findViewById(R.id.accelerometer)).setText("X: " + sensorEvent.values[0] + ", Y: " + sensorEvent.values[1] + ", Z: " + sensorEvent.values[2]);
+            ((TextView) findViewById(R.id.label)).setText("if you see the value change, it works!");
         }
     }
 
