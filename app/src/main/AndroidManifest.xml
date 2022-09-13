@@ -24,7 +24,7 @@
         android:theme="@style/Theme.DiagnosticTool"
         tools:targetApi="31">
         <activity
-            android:name=".TestAccellerometro"
+            android:name=".TestAccelerometro"
             android:exported="false" />
         <activity
             android:name=".TestFotocamera"
