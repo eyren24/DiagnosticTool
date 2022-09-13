@@ -5,7 +5,7 @@
         android:title="Scegli:">
         <menu>
             <item
-                android:id="@+id/item1"
+                android:id="@+id/camera"
                 android:icon="@drawable/ncam"
                 android:title="Camera"
                 android:checkable="true"/>

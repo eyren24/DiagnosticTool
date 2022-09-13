@@ -11,13 +11,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private NavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+        if (mNavigationView != null) {
+            mNavigationView.setNavigationItemSelectedListener(this);
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.camera) {
+            goToCamera();
+            return true;
+        }
+        return false;
     }
 
     protected void onResume(){
@@ -27,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         videoView.start();  //start() method of the VideoView class will start the video to play
     }
 
-    private void switchActivities() {
+    private void goToCamera() {
         Intent switchActivityIntent = new Intent(this, TestFotocamera.class);
         startActivity(switchActivityIntent);
     }
