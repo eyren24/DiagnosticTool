@@ -10,11 +10,10 @@
         android:id="@+id/textViewStepCounter"
         android:layout_width="220dp"
         android:layout_height="220dp"
-        android:background="@drawable/rounded_corner"
-        android:fontFamily="@font/bungee_inline"
+        android:fontFamily="@font/allerta_stencil"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#CC1010"
+        android:textColor="#FFFFFF"
         android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,15 +25,16 @@
     <TextView
         android:id="@+id/textViewStepDetector"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/aguafina_script"
+        android:layout_height="50dp"
+        android:fontFamily="@font/audiowide"
         android:text="Step Detector"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.248" />
 
     <TextView
         android:id="@+id/textView5"
