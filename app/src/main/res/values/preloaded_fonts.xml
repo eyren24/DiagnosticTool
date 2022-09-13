@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/aguafina_script</item>
         <item>@font/akronim</item>
         <item>@font/alfa_slab_one</item>
+        <item>@font/bungee_inline</item>
+        <item>@font/creepster</item>
     </array>
 </resources>

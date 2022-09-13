@@ -8,25 +8,46 @@
 
     <TextView
         android:id="@+id/textViewStepCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Step Counter"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:background="@drawable/rounded_corner"
+        android:fontFamily="@font/bungee_inline"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#CC1010"
+        android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <TextView
-        android:id="@+id/textViewStepDetextor"
+        android:id="@+id/textViewStepDetector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/aguafina_script"
         android:text="Step Detector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="265dp"
+        android:layout_height="55dp"
+        android:fontFamily="@font/creepster"
+        android:text="if the count increases your accelerometer works"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.775" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

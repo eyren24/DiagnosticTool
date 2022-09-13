@@ -1,7 +1,10 @@
 package com.solaredge.diagnostictool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,11 +24,15 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){ //ask for permission
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
         setContentView(R.layout.activity_test_accellerometro);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         textViewStepCounter = findViewById(R.id.textViewStepCounter);
-        textViewStepDetector = findViewById(R.id.textViewStepDetextor);
+        textViewStepDetector = findViewById(R.id.textViewStepDetector);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
@@ -41,8 +48,8 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor == mStepCounter){
-            stepCount = (int) sensorEvent.values[0];
-            textViewStepCounter.setText(String.valueOf(stepCount));
+            stepCount += 1;
+            ((TextView) findViewById(R.id.textViewStepCounter)).setText(String.valueOf(stepCount));
         }
     }
 
@@ -62,6 +69,5 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         super.onPause();
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
             sensorManager.unregisterListener(this, mStepCounter);
-
     }
 }
