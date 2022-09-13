@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToGiroscopio();
                 finish();
                 return true;
+            case R.id.accelerometro:
+                goToAccelerometro();
             default:
                 return false;
         }
@@ -57,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToGiroscopio() {
         Intent switchActivityIntent = new Intent(this, TestGiroscopio.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToAccelerometro() {
+        Intent switchActivityIntent = new Intent(this, TestAccellerometro.class);
         startActivity(switchActivityIntent);
     }
 }
