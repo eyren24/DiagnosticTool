@@ -1,9 +1,7 @@
 package com.solaredge.diagnostictool;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -17,8 +15,6 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import org.w3c.dom.Text;
-
 public class TestGiroscopio extends AppCompatActivity  implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -29,7 +25,7 @@ public class TestGiroscopio extends AppCompatActivity  implements SensorEventLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_test_accellerometro);
+        setContentView(R.layout.activity_test_giroscopio);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null){
             Sensor acceleroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
