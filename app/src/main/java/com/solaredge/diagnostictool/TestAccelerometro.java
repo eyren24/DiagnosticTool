@@ -51,7 +51,10 @@ public class TestAccelerometro extends AppCompatActivity  implements SensorEvent
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            ((TextView) findViewById(R.id.accelerometer)).setText("X: " + sensorEvent.values[0] + ", Y: " + sensorEvent.values[1] + ", Z: " + sensorEvent.values[2]);
+            double X = (double)Math.round(sensorEvent.values[0] * 10d) / 10d;
+            double Y = (double)Math.round(sensorEvent.values[1] * 10d) / 10d;
+            double Z = (double)Math.round(sensorEvent.values[2] * 10d) / 10d;
+            ((TextView) findViewById(R.id.accelerometer)).setText("X: " + X + ", Y: " + Y + ", Z: " + Z);
             ((TextView) findViewById(R.id.label)).setText("if you see the value change, it works!");
         }
     }
