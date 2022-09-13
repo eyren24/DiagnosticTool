@@ -3,20 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1935" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1935" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_drawer_menu_24px.xml" value="0.1935" />
         <entry key="..\:/DiagnosticTool/app/src/main/res/drawable/ic_search_24dp.xml" value="0.1935" />
-        <entry key="..\:/DiagnosticTool/app/src/main/res/layout/activity_main.xml" value="0.22239583333333332" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/layout/activity_test_accellerometro.xml" value="0.19410004275331338" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/layout/activity_test_fotocamera.xml" value="0.23645833333333333" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/menu/bottom_app_bar.xml" value="0.23645833333333333" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.19410004275331338" />
         <entry key="..\:/DiagnosticTool/app/src/main/res/menu/menu.xml" value="0.23645833333333333" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.2265" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2265" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/drawable/shape.xml" value="0.2275" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/layout/activity_test_fotocamera.xml" value="0.2425467407781708" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/layout/header_navigation_drawer.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/menu/bottom_app_bar.xml" value="0.25" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/aless/AndroidStudioProjects/DiagnosticTool/app/src/main/res/menu/navigation_drawer.xml" value="0.16799999999999998" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/menu/navigation_drawer.xml" value="0.19410004275331338" />
+        <entry key="..\:/DiagnosticTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1935" />
       </map>
     </option>
   </component>

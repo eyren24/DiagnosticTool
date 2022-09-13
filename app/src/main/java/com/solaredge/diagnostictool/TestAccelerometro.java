@@ -14,56 +14,24 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TestAccelerometro extends AppCompatActivity implements SensorEventListener {
+import org.w3c.dom.Text;
 
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private float lastAcc = 0.0f;
-    private float acceleration = 0.0f;
-    private float totAcc = 0.0f;
-    private boolean onEvent = false;
+public class TestAccelerometro extends AppCompatActivity  implements SensorEventListener {
+
+    private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_accellerometro);
-        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        lastAcc=SensorManager.GRAVITY_EARTH;
-        acceleration=SensorManager.GRAVITY_EARTH;
-    }
-
-    protected void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-    protected void onPause() {
-        super.onPause();
-        mSensorManager.unregisterListener(this);
-    }
-
-
-    @Override
-    public void onAccuracyChanged(Sensor arg0, int arg1)
-    { }
-
-    @Override
-    public void onSensorChanged(SensorEvent event)
-    {
-        if (!onEvent)
-        {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            lastAcc = acceleration;
-            acceleration = x*x+y*y+z*z;
-            float diff = acceleration - lastAcc;
-            totAcc = diff*acceleration;
-            if (totAcc>15000)
-            {
-                onEvent=true;
-                Toast.makeText(getApplicationContext(), "If you see this message, it works", Toast.LENGTH_LONG).show();
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        if (sensorManager != null){
+            Sensor acceleroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (acceleroSensor!=null){
+                sensorManager.registerListener(this, acceleroSensor, SensorManager.SENSOR_DELAY_NORMAL);
             }
+        }else{
+            Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -78,5 +46,17 @@ public class TestAccelerometro extends AppCompatActivity implements SensorEventL
     private void goToHome() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            ((TextView) findViewById(R.id.accelerometer)).setText("X: " + sensorEvent.values[0] + ", Y: " + sensorEvent.values[1] + ", Z: " + sensorEvent.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
