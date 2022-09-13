@@ -1,25 +1,20 @@
 package com.solaredge.diagnostictool;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         NavigationView mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setSelected(false);
@@ -39,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToCamera();
                 finish();
                 return true;
-            case R.id.accellerometro:
-                goToAccellerometro();
+            case R.id.giroscopio:
+                goToGiroscopio();
                 finish();
                 return true;
             default:
@@ -60,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent switchActivityIntent = new Intent(this, TestFotocamera.class);
         startActivity(switchActivityIntent);
     }
-    private void goToAccellerometro() {
-        Intent switchActivityIntent = new Intent(this, TestAccelerometro.class);
+    private void goToGiroscopio() {
+        Intent switchActivityIntent = new Intent(this, TestGiroscopio.class);
         startActivity(switchActivityIntent);
     }
 }

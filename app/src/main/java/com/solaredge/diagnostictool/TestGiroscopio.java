@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,7 +19,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import org.w3c.dom.Text;
 
-public class TestAccelerometro extends AppCompatActivity  implements SensorEventListener {
+public class TestGiroscopio extends AppCompatActivity  implements SensorEventListener {
 
     private SensorManager sensorManager;
     private ExtendedFloatingActionButton extendedFab;
@@ -27,6 +28,7 @@ public class TestAccelerometro extends AppCompatActivity  implements SensorEvent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_accellerometro);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null){
