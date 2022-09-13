@@ -42,6 +42,7 @@
         android:layout_height="55dp"
         android:fontFamily="@font/creepster"
         android:text="if the count increases your accelerometer works"
+        android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
