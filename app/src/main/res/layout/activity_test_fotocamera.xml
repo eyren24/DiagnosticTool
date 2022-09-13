@@ -7,6 +7,22 @@
     android:background="#00BCD4"
     tools:context=".TestFotocamera">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchMaterial"
+        android:layout_width="61dp"
+        android:layout_height="57dp"
+        android:buttonTint="#2196F3"
+        android:buttonTintMode="multiply"
+        android:checked="true"
+        android:textColorHighlight="#2196F3"
+        android:textColorLink="#00BCD4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/open_camera"
         android:layout_width="wrap_content"
@@ -24,60 +40,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.704" />
 
-    <TextView
-        android:id="@+id/textView2"
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="ANTERIORE"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="extended_fab_content_desc"
+        android:text="Home"
+        app:icon="@drawable/ic_baseline_home_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
-        app:layout_constraintStart_toEndOf="@+id/switchMaterial"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.559" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchMaterial"
-        android:layout_width="61dp"
-        android:layout_height="57dp"
-        android:buttonTint="#2196F3"
-        android:buttonTintMode="multiply"
-        android:checked="true"
-        android:textColorHighlight="#2196F3"
-        android:textColorLink="#00BCD4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
+        app:layout_constraintVertical_bias="0.977" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="FRONTALE"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:drawableLeft="@drawable/camswitch"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/switchMaterial"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.867"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.561" />
-
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextureView
         android:id="@+id/textureView"
-        android:layout_width="360dp"
-        android:layout_height="275dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
-
-
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

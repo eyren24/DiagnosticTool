@@ -27,6 +27,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Arrays;
@@ -42,14 +45,27 @@ public class TestFotocamera extends AppCompatActivity {
     private CameraDevice myCameraDevice;
     private TextureView myTexureView;
     private CaptureRequest.Builder myCaptureRequestBuilder;
-
+    private ExtendedFloatingActionButton extendedFab;
+    private int click=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fotocamera);
+        extendedFab = findViewById(R.id.extended_fab);
         myTexureView = findViewById(R.id.textureView);
         myCameraManagaer = (CameraManager) getSystemService(CAMERA_SERVICE);
         openCamera();
+        extendedFab.shrink();
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click ++;
+                if (click == 2){
+                    goToHome();
+                }
+            }
+        });
     }
 
     private CameraDevice.StateCallback myStateCallback = new CameraDevice.StateCallback() {
