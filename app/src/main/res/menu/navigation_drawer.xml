@@ -12,37 +12,37 @@
             <item
                 android:id="@+id/accellerometro"
                 android:icon="@drawable/nacc"
-                android:title="Accellerometro"
+                android:title="Accelerometer"
                 android:checkable="true"/>
             <item
                 android:id="@+id/giroscopio"
                 android:icon="@drawable/ngir"
-                android:title="Giroscopio"
+                android:title="Gyroscope"
                 android:checkable="true"/>
             <item
                 android:id="@+id/magnetometro"
                 android:icon="@drawable/nmagn"
-                android:title="Magnetometro"
+                android:title="Magnetometer"
                 android:checkable="true"/>
             <item
                 android:id="@+id/SensoreDiProssimita"
                 android:icon="@drawable/nsp"
-                android:title="Sensore Di Prossimità"
+                android:title="Proximity sensor"
                 android:checkable="true"/>
             <item
                 android:id="@+id/SensoreDiLuminosita"
                 android:icon="@drawable/nsl"
-                android:title="Sensore di Luminosità"
+                android:title="Brightness sensor"
                 android:checkable="true"/>
             <item
                 android:id="@+id/termometro"
                 android:icon="@drawable/nterm"
-                android:title="Termometro"
+                android:title="Thermometer"
                 android:checkable="true"/>
             <item
                 android:id="@+id/SensoreDiImpronta"
                 android:icon="@drawable/nsi"
-                android:title="Sensore Di Impronta"
+                android:title="Fingerprint sensor"
                 android:checkable="true"/>
         </menu>
     </item>
