@@ -59,16 +59,16 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
-        android:layout_width="413dp"
-        android:layout_height="370dp"
+        android:layout_width="411dp"
+        android:layout_height="436dp"
         android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        android:background="#03A9F4"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/videoView"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints"
         app:menu="@menu/navigation_drawer"
-        />
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
