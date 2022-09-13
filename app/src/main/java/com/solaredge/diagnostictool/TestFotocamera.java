@@ -112,7 +112,14 @@ public class TestFotocamera extends AppCompatActivity {
 
     }
 
-    private void switchActivities() {
+    @Override
+    public void onBackPressed(){
+        goToHome();
+        finish();
+        //super.onBackPressed();
+    }
+
+    private void goToHome() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
