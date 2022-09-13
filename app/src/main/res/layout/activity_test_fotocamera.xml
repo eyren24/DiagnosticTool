@@ -54,7 +54,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="extended_fab_content_desc"
-        android:onClick="cameraPreview"
         android:text="apri fotocamera"
         app:icon="@drawable/ic_baseline_camera_alt_24"
         app:layout_constraintBottom_toBottomOf="parent"

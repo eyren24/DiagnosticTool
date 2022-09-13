@@ -24,12 +24,16 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Arrays;
@@ -41,21 +45,33 @@ public class TestFotocamera extends AppCompatActivity {
 
     private CameraCaptureSession myCameraCaptureSession;
     private String myCameraID;
-    private CameraManager myCameraManagaer;
+    private CameraManager myCameraManager;
     private CameraDevice myCameraDevice;
     private TextureView myTexureView;
     private CaptureRequest.Builder myCaptureRequestBuilder;
     private ExtendedFloatingActionButton extendedFab;
     private int click=0;
+    private Button camera_button;
+    private SwitchMaterial frontBackCam;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fotocamera);
+
+        frontBackCam = findViewById(R.id.switchMaterial);
+
+        camera_button = findViewById(R.id.open_camera);
+
         extendedFab = findViewById(R.id.extended_fab);
+
         myTexureView = findViewById(R.id.textureView);
-        myCameraManagaer = (CameraManager) getSystemService(CAMERA_SERVICE);
-        openCamera();
+
+        myCameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
+
         extendedFab.shrink();
+
         extendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +80,33 @@ public class TestFotocamera extends AppCompatActivity {
                 if (click == 2){
                     goToHome();
                 }
+            }
+        });
+        frontBackCam.setChecked(false);
+        if (frontBackCam.isChecked()){
+            // Back camera
+            openCamera();
+        }else {
+            openCameraFront();
+        }
+
+        frontBackCam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    // Back camera
+                    openCamera();
+                }else {
+                    // Front camre
+                    openCameraFront();
+                }
+            }
+        });
+
+        camera_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cameraPreview();
             }
         });
     }
@@ -82,23 +125,36 @@ public class TestFotocamera extends AppCompatActivity {
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int error) {
             myCameraDevice.close();
-            myCameraDevice = null;
         }
     };
 
     private void openCamera() {
         try {
-            myCameraID = myCameraManagaer.getCameraIdList()[0];
+            myCameraID = myCameraManager.getCameraIdList()[0];
             ActivityCompat.requestPermissions(TestFotocamera.this, new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            myCameraManagaer.openCamera(myCameraID, myStateCallback, null);
+            myCameraManager.openCamera(myCameraID, myStateCallback, null);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-    public void cameraPreview(View view){
+    private void openCameraFront() {
+        try {
+            myCameraID = myCameraManager.getCameraIdList()[1];
+            ActivityCompat.requestPermissions(TestFotocamera.this, new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            myCameraManager.openCamera(myCameraID, myStateCallback, null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void cameraPreview(){
         SurfaceTexture mySurfaceTexure = myTexureView.getSurfaceTexture();
         Surface surface = new Surface(mySurfaceTexure);
         try {
@@ -109,14 +165,12 @@ public class TestFotocamera extends AppCompatActivity {
                 public void onConfigured(@NonNull CameraCaptureSession session) {
                     myCameraCaptureSession = session;
                     myCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-
                     try {
                         myCameraCaptureSession.setRepeatingRequest(myCaptureRequestBuilder.build(),null, null);
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
 
@@ -125,7 +179,6 @@ public class TestFotocamera extends AppCompatActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
