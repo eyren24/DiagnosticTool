@@ -7,6 +7,19 @@
     android:background="#00BCD4"
     tools:context=".TestFotocamera">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:drawableLeft="@drawable/camswitch"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.867"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switchMaterial"
         android:layout_width="61dp"
@@ -22,19 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="31dp"
-        android:layout_height="31dp"
-        android:drawableLeft="@drawable/camswitch"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/open_camera"
