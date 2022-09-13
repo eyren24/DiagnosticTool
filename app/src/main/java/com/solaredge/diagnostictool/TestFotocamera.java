@@ -112,15 +112,6 @@ public class TestFotocamera extends AppCompatActivity {
 
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
-        int itemId = item.getItemId();
-        if (itemId == R.id.home) {
-            switchActivities();
-            return true;
-        }
-        return true;
-    };
-
     private void switchActivities() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);

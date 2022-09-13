@@ -14,15 +14,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private NavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
-        if (mNavigationView != null) {
-            mNavigationView.setNavigationItemSelectedListener(this);
-        }
+        NavigationView mNavigationView = findViewById(R.id.navigationView);
+        mNavigationView.setSelected(false);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.camera) {
             goToCamera();
+
             return true;
         }
         return false;
