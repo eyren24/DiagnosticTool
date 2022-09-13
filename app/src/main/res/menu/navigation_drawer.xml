@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/main_item"
+        android:checkable="false"
+        android:checked="false"
+        android:enabled="false"
         android:title="select:">
         <menu>
             <item
@@ -11,39 +14,39 @@
                 android:title="Camera" />
             <item
                 android:id="@+id/accellerometro"
+                android:checkable="true"
                 android:icon="@drawable/nacc"
-                android:title="Accelerometer"
-                android:checkable="true"/>
+                android:title="Accelerometer" />
             <item
                 android:id="@+id/giroscopio"
+                android:checkable="true"
                 android:icon="@drawable/ngir"
-                android:title="Gyroscope"
-                android:checkable="true"/>
+                android:title="Gyroscope" />
             <item
                 android:id="@+id/magnetometro"
+                android:checkable="true"
                 android:icon="@drawable/nmagn"
-                android:title="Magnetometer"
-                android:checkable="true"/>
+                android:title="Magnetometer" />
             <item
                 android:id="@+id/SensoreDiProssimita"
+                android:checkable="true"
                 android:icon="@drawable/nsp"
-                android:title="Proximity sensor"
-                android:checkable="true"/>
+                android:title="Proximity sensor" />
             <item
                 android:id="@+id/SensoreDiLuminosita"
+                android:checkable="true"
                 android:icon="@drawable/nsl"
-                android:title="Brightness sensor"
-                android:checkable="true"/>
+                android:title="Brightness sensor" />
             <item
                 android:id="@+id/termometro"
+                android:checkable="true"
                 android:icon="@drawable/nterm"
-                android:title="Thermometer"
-                android:checkable="true"/>
+                android:title="Thermometer" />
             <item
                 android:id="@+id/SensoreDiImpronta"
+                android:checkable="true"
                 android:icon="@drawable/nsi"
-                android:title="Fingerprint sensor"
-                android:checkable="true"/>
+                android:title="Fingerprint sensor" />
         </menu>
     </item>
 </menu>
