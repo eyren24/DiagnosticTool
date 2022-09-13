@@ -14,11 +14,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
 import org.w3c.dom.Text;
 
 public class TestAccelerometro extends AppCompatActivity  implements SensorEventListener {
 
     private SensorManager sensorManager;
+    private ExtendedFloatingActionButton extendedFab;
+    private int click=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,19 @@ public class TestAccelerometro extends AppCompatActivity  implements SensorEvent
         }else{
             Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
         }
+        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.shrink();
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click ++;
+                if (click == 2){
+                    goToHome();
+                }
+            }
+        });
+
     }
 
 
