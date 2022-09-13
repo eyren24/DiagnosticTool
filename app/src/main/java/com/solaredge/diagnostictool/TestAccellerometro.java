@@ -4,21 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class TestAccellerometro extends AppCompatActivity implements SensorEventListener {
     private TextView textViewStepCounter, textViewStepDetector;
     private SensorManager sensorManager;
     private Sensor mStepCounter;
     private boolean isCounterSensorPresent;
-    int stepCount = 0;
+    private ExtendedFloatingActionButton extendedFab;
+    private int click=0;
+    int stepCount = -1;
 
 
     @Override
@@ -43,6 +49,18 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
             textViewStepCounter.setText("Counter sensor is not present");
             isCounterSensorPresent = false;
         }
+        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.shrink();
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click ++;
+                if (click == 2){
+                    goToHome();
+                }
+            }
+        });
     }
 
     @Override
@@ -69,5 +87,9 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         super.onPause();
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
             sensorManager.unregisterListener(this, mStepCounter);
+    }
+    private void goToHome() {
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
     }
 }
