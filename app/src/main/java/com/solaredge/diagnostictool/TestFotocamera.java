@@ -43,15 +43,13 @@ import java.util.concurrent.Executor;
 
 public class TestFotocamera extends AppCompatActivity {
 
-    private CameraCaptureSession myCameraCaptureSession;
-    private String myCameraID;
-    private CameraManager myCameraManager;
-    private CameraDevice myCameraDevice;
-    private TextureView myTexureView;
-    private CaptureRequest.Builder myCaptureRequestBuilder;
     private ExtendedFloatingActionButton extendedFab;
+
+    // Double click to go home
     private int click=0;
+
     private Button camera_button;
+
     private SwitchMaterial frontBackCam;
 
     @Override
@@ -60,18 +58,15 @@ public class TestFotocamera extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fotocamera);
 
+        // Get camera switch from UI
         frontBackCam = findViewById(R.id.switchMaterial);
 
+        // Get camera button from UI
         camera_button = findViewById(R.id.open_camera);
 
+        // Button home animation
         extendedFab = findViewById(R.id.extended_fab);
-
-        myTexureView = findViewById(R.id.textureView);
-
-        myCameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
-
         extendedFab.shrink();
-
         extendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,112 +77,38 @@ public class TestFotocamera extends AppCompatActivity {
                 }
             }
         });
-        frontBackCam.setChecked(false);
-        if (frontBackCam.isChecked()){
-            // Back camera
-            openCamera();
-        }else {
-            openCameraFront();
-        }
-
+        // Switch button cam
         frontBackCam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     // Back camera
-                    openCamera();
+
                 }else {
                     // Front camre
-                    openCameraFront();
+
                 }
             }
         });
 
+        // Show Camera
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraPreview();
+                camera_button.setVisibility(View.GONE);
             }
         });
     }
 
-    private CameraDevice.StateCallback myStateCallback = new CameraDevice.StateCallback() {
-        @Override
-        public void onOpened(@NonNull CameraDevice camera) {
-            myCameraDevice = camera;
-        }
 
-        @Override
-        public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-            myCameraDevice.close();
-        }
-
-        @Override
-        public void onError(@NonNull CameraDevice cameraDevice, int error) {
-            myCameraDevice.close();
-        }
-    };
-
-    private void openCamera() {
-        try {
-            myCameraID = myCameraManager.getCameraIdList()[0];
-            ActivityCompat.requestPermissions(TestFotocamera.this, new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            myCameraManager.openCamera(myCameraID, myStateCallback, null);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void openCameraFront() {
-        try {
-            myCameraID = myCameraManager.getCameraIdList()[1];
-            ActivityCompat.requestPermissions(TestFotocamera.this, new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            myCameraManager.openCamera(myCameraID, myStateCallback, null);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    public void cameraPreview(){
-        SurfaceTexture mySurfaceTexure = myTexureView.getSurfaceTexture();
-        Surface surface = new Surface(mySurfaceTexure);
-        try {
-            myCaptureRequestBuilder = myCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            myCaptureRequestBuilder.addTarget(surface);
-            myCameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
-                @Override
-                public void onConfigured(@NonNull CameraCaptureSession session) {
-                    myCameraCaptureSession = session;
-                    myCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-                    try {
-                        myCameraCaptureSession.setRepeatingRequest(myCaptureRequestBuilder.build(),null, null);
-                    } catch (CameraAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-
-                }
-            }, null);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // Back android button
     @Override
     public void onBackPressed(){
         goToHome();
         finish();
-        //super.onBackPressed();
     }
 
+    // Home func
     private void goToHome() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
