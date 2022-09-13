@@ -13,15 +13,15 @@
                 android:icon="@drawable/ncam"
                 android:title="Camera" />
             <item
-                android:id="@+id/accellerometro"
-                android:checkable="true"
-                android:icon="@drawable/nacc"
-                android:title="Accelerometer" />
-            <item
                 android:id="@+id/giroscopio"
                 android:checkable="true"
-                android:icon="@drawable/ngir"
+                android:icon="@drawable/nacc"
                 android:title="Gyroscope" />
+            <item
+                android:id="@+id/accelerometro"
+                android:checkable="true"
+                android:icon="@drawable/ngir"
+                android:title="Accelerometer" />
             <item
                 android:id="@+id/magnetometro"
                 android:checkable="true"
