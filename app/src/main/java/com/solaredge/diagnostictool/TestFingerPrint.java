@@ -1,11 +1,7 @@
 package com.solaredge.diagnostictool;
 
 import android.content.Intent;
-import android.hardware.biometrics.BiometricManager;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,9 +28,9 @@ public class TestFingerPrint extends AppCompatActivity {
 
         //Init
         executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(TestFingerPrint.this, executor, new BiometricPrompt.AuthenticationCallback(){
+        biometricPrompt = new BiometricPrompt(TestFingerPrint.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
-            public void onAuthenticationError(int errorCode, @NotNull CharSequence errString){
+            public void onAuthenticationError(int errorCode, @NotNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 Toast.makeText(getApplicationContext(), "Authentication error: " + errString + "\n error code: " + errorCode, Toast.LENGTH_LONG).show();
             }

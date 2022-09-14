@@ -1,8 +1,5 @@
 package com.solaredge.diagnostictool;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,23 +12,25 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class TestAccellerometro extends AppCompatActivity implements SensorEventListener {
+    int stepCount = -1;
     private TextView textViewStepCounter, textViewStepDetector;
     private SensorManager sensorManager;
     private Sensor mStepCounter;
     private boolean isCounterSensorPresent;
     private ExtendedFloatingActionButton extendedFab;
-    private int click=0;
-    int stepCount = -1;
-
+    private int click = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){ //ask for permission
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) { //ask for permission
             requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
         }
         setContentView(R.layout.activity_test_accellerometro);
@@ -41,11 +40,10 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         textViewStepDetector = findViewById(R.id.textViewStepDetector);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
-        {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             mStepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
             isCounterSensorPresent = true;
-        }else{
+        } else {
             textViewStepCounter.setText("Counter sensor is not present");
             isCounterSensorPresent = false;
         }
@@ -55,8 +53,8 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
             @Override
             public void onClick(View view) {
                 extendedFab.extend();
-                click ++;
-                if (click == 2){
+                click++;
+                if (click == 2) {
                     goToHome();
                 }
             }
@@ -65,7 +63,7 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(sensorEvent.sensor == mStepCounter){
+        if (sensorEvent.sensor == mStepCounter) {
             stepCount += 1;
             ((TextView) findViewById(R.id.textViewStepCounter)).setText(String.valueOf(stepCount));
         }
@@ -77,23 +75,26 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null)
             sensorManager.registerListener(this, mStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
     }
+
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null)
             sensorManager.unregisterListener(this, mStepCounter);
     }
+
     private void goToHome() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         goToHome();
         finish();
         //super.onBackPressed();

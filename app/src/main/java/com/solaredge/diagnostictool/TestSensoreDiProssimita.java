@@ -1,7 +1,5 @@
 package com.solaredge.diagnostictool;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,7 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -25,8 +24,35 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
     private int puff = 0;
     private TextView magia;
     private ImageView bunny;
+    // calling the sensor event class to detect
+    // the change in data when sensor starts working.
+    SensorEventListener proximitySensorEventListener = new SensorEventListener() {
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            magia = findViewById(R.id.magic);
+            bunny = findViewById(R.id.rabbit);
+            if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+                if (event.values[0] == 0) {
+                    sensorStatusTV.setText("Near");
+                    if (puff < 1) {
+                        magia.setText("PUFF!");
+                        bunny.setVisibility(View.GONE);
+                        puff++;
+                    }
+                } else {
+                    sensorStatusTV.setText("Away");
+                }
+            }
+        }
+    };
     private ExtendedFloatingActionButton extendedFab;
-    private int click=0;
+    private int click = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,50 +83,26 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 extendedFab.extend();
-                click ++;
-                if (click == 2){
+                click++;
+                if (click == 2) {
                     goToHome();
                 }
             }
         });
     }
 
-    // calling the sensor event class to detect
-    // the change in data when sensor starts working.
-    SensorEventListener proximitySensorEventListener = new SensorEventListener() {
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            magia = findViewById(R.id.magic);
-            bunny = findViewById(R.id.rabbit);
-            if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-                if (event.values[0] == 0) {
-                    sensorStatusTV.setText("Near");
-                    if(puff<1){
-                        magia.setText("PUFF!");
-                        bunny.setVisibility(View.GONE);
-                        puff++;
-                    }
-                } else {
-                    sensorStatusTV.setText("Away");
-                }
-            }
-        }
-    };
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        puff=0;
+        puff = 0;
     }
+
     private void goToHome() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         goToHome();
         finish();
         //super.onBackPressed();

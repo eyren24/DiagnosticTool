@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         finish();
         //super.onBackPressed();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.camera:
                 goToCamera();
                 finish();
@@ -56,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         VideoView videoView = (VideoView) findViewById(R.id.videoView);  //casting to VideoView is not Strictly required above API level 26
         videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.bg); //set the path of the video that we need to use in our VideoView
@@ -69,18 +68,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent switchActivityIntent = new Intent(this, TestFotocamera.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToGiroscopio() {
         Intent switchActivityIntent = new Intent(this, TestGiroscopio.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToAccelerometro() {
         Intent switchActivityIntent = new Intent(this, TestAccellerometro.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToSensoreDiProssimita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiProssimita.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToFingerprintSensor() {
         Intent switchActivityIntent = new Intent(this, TestFingerPrint.class);
         startActivity(switchActivityIntent);

@@ -1,19 +1,10 @@
 package com.solaredge.diagnostictool;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.Preview;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
@@ -24,23 +15,16 @@ import android.os.Bundle;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 
 public class TestFotocamera extends AppCompatActivity {
 
@@ -51,12 +35,29 @@ public class TestFotocamera extends AppCompatActivity {
     private String cameraID;
     private TextureView textureView;
     private CaptureRequest.Builder captureRequestBuilder;
+    // State Callback
+    private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+        @Override
+        public void onOpened(@NonNull CameraDevice camera) {
+            closeCameraDevice();
+            cameraDevice = camera;
+            cameraPreview();
+        }
 
+        @Override
+        public void onDisconnected(@NonNull CameraDevice cameraDevice) {
+            cameraDevice.close();
+        }
+
+        @Override
+        public void onError(@NonNull CameraDevice cameraDevice, int i) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    };
     private ExtendedFloatingActionButton extendedFab;
-
     // Double click to go home
-    private int click=0;
-
+    private int click = 0;
     private SwitchMaterial frontBackCam;
 
     @Override
@@ -86,8 +87,8 @@ public class TestFotocamera extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 extendedFab.extend();
-                click ++;
-                if (click == 2){
+                click++;
+                if (click == 2) {
                     goToHome();
                 }
             }
@@ -97,7 +98,7 @@ public class TestFotocamera extends AppCompatActivity {
         frontBackCam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     // back
                     try {
                         cameraCaptureSession.close();
@@ -105,7 +106,7 @@ public class TestFotocamera extends AppCompatActivity {
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     // front
                     try {
                         cameraCaptureSession.close();
@@ -118,28 +119,6 @@ public class TestFotocamera extends AppCompatActivity {
         });
     }
 
-
-    // State Callback
-    private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
-        @Override
-        public void onOpened(@NonNull CameraDevice camera) {
-            closeCameraDevice();
-            cameraDevice = camera;
-            cameraPreview();
-        }
-
-        @Override
-        public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-            cameraDevice.close();
-        }
-
-        @Override
-        public void onError(@NonNull CameraDevice cameraDevice, int i) {
-            cameraDevice.close();
-            cameraDevice = null;
-        }
-    };
-
     // CLose camera?
     private void closeCameraDevice() {
         if (cameraDevice != null) {
@@ -149,7 +128,7 @@ public class TestFotocamera extends AppCompatActivity {
     }
 
     // Start camera
-    private void openCamera(String camNum){
+    private void openCamera(String camNum) {
         ActivityCompat.requestPermissions(TestFotocamera.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -163,20 +142,20 @@ public class TestFotocamera extends AppCompatActivity {
     }
 
     // Start the preview
-    private void cameraPreview(){
+    private void cameraPreview() {
         SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
         Surface surface = new Surface(surfaceTexture);
         try {
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(surface);
-            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback(){
-            @Override
+            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
+                @Override
                 public void onConfigured(@NonNull CameraCaptureSession session) {
                     cameraCaptureSession = session;
                     captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-                    try{
+                    try {
                         cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, null);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -186,14 +165,14 @@ public class TestFotocamera extends AppCompatActivity {
 
                 }
             }, null);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Back android button
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         goToHome();
         finish();
     }
