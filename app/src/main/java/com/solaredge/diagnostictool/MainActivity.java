@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToSensoreDiLuminosita();
                 finish();
                 return true;
+            case R.id.termometro:
+                goToTermometro();
+                finish();
+                return true;
             default:
                 return false;
         }
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToSensoreDiLuminosita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiLuminosita.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToTermometro() {
+        Intent switchActivityIntent = new Intent(this, TestTermometro.class);
         startActivity(switchActivityIntent);
     }
 }

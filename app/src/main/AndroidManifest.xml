@@ -28,6 +28,9 @@
         android:theme="@style/Theme.DiagnosticTool"
         tools:targetApi="31">
         <activity
+            android:name=".TestTermometro"
+            android:exported="false" />
+        <activity
             android:name=".TestSensoreDiLuminosita"
             android:exported="false" />
         <activity
