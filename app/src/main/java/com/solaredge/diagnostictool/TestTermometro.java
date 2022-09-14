@@ -37,6 +37,7 @@ public class TestTermometro extends AppCompatActivity {
 
         if (sensor == null) {
             temperature.setText(NOT_SUPPORTED_MESSAGE);
+            temperature.setTextSize(30);
         }else{
             temperature.setText((int) sensor.getPower());
         }
