@@ -5,17 +5,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class TestPowerButton extends AppCompatActivity {
+
+    private static TextView powerlabel;
+
+    private ExtendedFloatingActionButton extendedFab;
+    private int click = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_power_button);
+
+        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.shrink();
+
+        powerlabel = findViewById(R.id.powerlabel);
         IntentFilter filter = new IntentFilter( Intent.ACTION_SCREEN_ON );
         filter.addAction( Intent.ACTION_SCREEN_OFF );
         registerReceiver(new ScreenReceiver(), filter);
+
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click++;
+                if (click == 2) {
+                    goToHome();
+                }
+            }
+        });
     }
 
     public static void unlockScreen () {
@@ -41,5 +67,19 @@ public class TestPowerButton extends AppCompatActivity {
         current = this;
         super.onResume();
     }
+    public static void changeLabel(String text){
+        powerlabel.setText(text);
+    }
 
+    @Override
+    public void onBackPressed() {
+        goToHome();
+        finish();
+        //super.onBackPressed();
+    }
+
+    private void goToHome() {
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
+    }
 }

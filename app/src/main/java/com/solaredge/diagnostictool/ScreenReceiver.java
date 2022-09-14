@@ -3,11 +3,6 @@ package com.solaredge.diagnostictool;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.SyncStateContract;
-import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 public class ScreenReceiver extends BroadcastReceiver {
 
@@ -21,7 +16,7 @@ public class ScreenReceiver extends BroadcastReceiver {
 
             case Intent.ACTION_SCREEN_ON:
                 // and do whatever you need to do here
-                Toast.makeText(context.getApplicationContext(), "dewfwerg", Toast.LENGTH_LONG).show();
+                TestPowerButton.changeLabel("Power button pressed");
                 TestPowerButton.clearScreen();
         }
     }
