@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToTermometro();
                 finish();
                 return true;
+            case R.id.magnetometro:
+                goToMagnetometer();
+                finish();
+                return true;
             default:
                 return false;
         }
@@ -102,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToTermometro() {
         Intent switchActivityIntent = new Intent(this, TestTermometro.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToMagnetometer() {
+        Intent switchActivityIntent = new Intent(this, TestMagnetometer.class);
         startActivity(switchActivityIntent);
     }
 }
