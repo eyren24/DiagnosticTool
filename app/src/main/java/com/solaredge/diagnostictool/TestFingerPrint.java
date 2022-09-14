@@ -1,6 +1,8 @@
 package com.solaredge.diagnostictool;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -72,7 +74,15 @@ public class TestFingerPrint extends AppCompatActivity {
                 .setConfirmationRequired(true)
                 .build();
 
-        biometricPrompt.authenticate(promptInfo);
+        FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
+        if (!fingerprintManager.isHardwareDetected()) {
+            ((TextView) findViewById(R.id.fingerprintalert)).setText("Sorry, sensor not available for this device.");
+        } else if (!fingerprintManager.hasEnrolledFingerprints()) {
+            ((TextView) findViewById(R.id.fingerprintalert)).setText("Sorry, sensor not available for this device.");
+        } else {
+            biometricPrompt.authenticate(promptInfo);
+        }
+
 
         extendedFab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -69,7 +69,7 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
         // sensor is not present in users device.
         if (proximitySensor == null) {
             sensorStatusTV.setText("No proximity sensor found in device.");
-            finish();
+            return;
         } else {
             // registering our sensor with sensor manager.
             sensorManager.registerListener(proximitySensorEventListener,

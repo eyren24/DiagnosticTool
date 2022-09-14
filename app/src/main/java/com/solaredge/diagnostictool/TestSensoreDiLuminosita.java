@@ -33,6 +33,7 @@ public class TestSensoreDiLuminosita extends AppCompatActivity {
         lightLevel = (TextView) findViewById(R.id.lumus);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
         sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         extendedFab = findViewById(R.id.extended_fab);
@@ -47,7 +48,11 @@ public class TestSensoreDiLuminosita extends AppCompatActivity {
                 }
             }
         });
-
+        if (sensor == null){
+            ((TextView) findViewById(R.id.lumus)).setText("Sorry, sensor not available for this device.");
+            return;
+        }
+        sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override

@@ -31,6 +31,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             Sensor acceleroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (acceleroSensor != null) {
                 sensorManager.registerListener(this, acceleroSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            }else{
+                ((TextView) findViewById(R.id.accelerometer)).setText("Sorry, sensor not available for this device.");
             }
         } else {
             Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
