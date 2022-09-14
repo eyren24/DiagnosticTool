@@ -22,6 +22,8 @@ public class TestTermometro extends AppCompatActivity {
     private SensorManager sensorManager;
     private Sensor sensor;
     private TextView temperature;
+    private final static String NOT_SUPPORTED_MESSAGE = "Sorry, sensor not available for this device.";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,11 @@ public class TestTermometro extends AppCompatActivity {
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
         temperature = (TextView) findViewById(R.id.temperatura);
 
+        if (sensor == null) {
+            temperature.setText(NOT_SUPPORTED_MESSAGE);
+        }else{
+            temperature.setText((int) sensor.getPower());
+        }
 
         extendedFab = findViewById(R.id.extended_fab);
         extendedFab.shrink();
@@ -46,7 +53,6 @@ public class TestTermometro extends AppCompatActivity {
                 }
             }
         });
-        temperature.setText((int) sensor.getPower());
     }
 
 
