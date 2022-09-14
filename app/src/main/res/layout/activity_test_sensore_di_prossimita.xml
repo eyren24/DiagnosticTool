@@ -64,10 +64,10 @@
 
     <TextView
         android:id="@+id/magic"
-        android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:fontFamily="@font/codystar"
-        android:textSize="16sp"
+        android:layout_width="104dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/faster_one"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
