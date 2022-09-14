@@ -2,6 +2,7 @@ package com.solaredge.diagnostictool;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import androidx.compose.ui.text.input.TextFieldValue;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executor;
@@ -21,14 +24,20 @@ public class TestFingerPrint extends AppCompatActivity {
     protected BiometricPrompt biometricPrompt;
     protected Executor executor;
     protected BiometricPrompt.PromptInfo promptInfo;
-    private ConstraintLayout constraintLayout;
     private TextView fingerprintalert;
+
+    private ExtendedFloatingActionButton extendedFab;
+    private int click = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_finger_print);
+
         fingerprintalert = findViewById(R.id.fingerprintalert);
+
+        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.shrink();
 
         //Init
         executor = ContextCompat.getMainExecutor(this);
@@ -64,6 +73,17 @@ public class TestFingerPrint extends AppCompatActivity {
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
+
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click++;
+                if (click == 2) {
+                    goToHome();
+                }
+            }
+        });
     }
 
     @Override
