@@ -19,18 +19,19 @@ public class TestTermometro extends AppCompatActivity {
 
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
-    private SensorManager mgr;
-    private Sensor temp;
-    private TextView text;
+    private SensorManager sensorManager;
+    private Sensor sensor;
+    private TextView temperature;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_termometro);
-        mgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 
-        temp = mgr.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-        text = (TextView) findViewById(R.id.temperatura);
+        sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        temperature = (TextView) findViewById(R.id.temperatura);
 
 
         extendedFab = findViewById(R.id.extended_fab);
@@ -45,14 +46,14 @@ public class TestTermometro extends AppCompatActivity {
                 }
             }
         });
-        text.setText((int) temp.getPower());
+        temperature.setText((int) sensor.getPower());
     }
 
 
     private SensorEventListener listener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            text.setText((int) event.values[0] + "°C");
+            temperature.setText((int) event.values[0] + "°C");
         }
 
         @Override
