@@ -5,48 +5,53 @@
         android:checkable="false"
         android:checked="false"
         android:enabled="false"
-        android:title="select:">
+        android:title="@string/select">
         <menu>
             <item
                 android:id="@+id/camera"
                 android:checkable="true"
                 android:icon="@drawable/ncam"
-                android:title="Camera" />
+                android:title="@string/camera_check" />
             <item
-                android:id="@+id/giroscopio"
+                android:id="@+id/gyroscope"
                 android:checkable="true"
                 android:icon="@drawable/nacc"
-                android:title="Gyroscope" />
+                android:title="@string/gyroscope" />
             <item
-                android:id="@+id/accelerometro"
+                android:id="@+id/accelerometer"
                 android:checkable="true"
                 android:icon="@drawable/ngir"
-                android:title="Accelerometer" />
+                android:title="@string/accelerometer" />
             <item
-                android:id="@+id/magnetometro"
+                android:id="@+id/magnetometer"
                 android:checkable="true"
                 android:icon="@drawable/nmagn"
-                android:title="Magnetometer" />
+                android:title="@string/magnetometer" />
             <item
                 android:id="@+id/proximity"
                 android:checkable="true"
                 android:icon="@drawable/nsp"
-                android:title="Proximity sensor" />
+                android:title="@string/proximity_sensor" />
             <item
-                android:id="@+id/SensoreDiLuminosita"
+                android:id="@+id/brightness_sensor"
                 android:checkable="true"
                 android:icon="@drawable/nsl"
-                android:title="Brightness sensor" />
+                android:title="@string/brightness_sensor" />
             <item
-                android:id="@+id/termometro"
+                android:id="@+id/termometer"
                 android:checkable="true"
                 android:icon="@drawable/nterm"
-                android:title="Thermometer" />
+                android:title="@string/thermometer" />
             <item
                 android:id="@+id/fingerprintSensor"
                 android:checkable="true"
                 android:icon="@drawable/nsi"
-                android:title="Fingerprint sensor" />
+                android:title="@string/fingerprint_sensor" />
+            <item
+                android:id="@+id/powerbutton"
+                android:checkable="true"
+                android:icon="@drawable/ic_baseline_power_settings_new_24"
+                android:title="@string/power_button_check" />
         </menu>
     </item>
 </menu>

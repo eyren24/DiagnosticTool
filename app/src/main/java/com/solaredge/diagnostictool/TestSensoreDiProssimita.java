@@ -55,7 +55,6 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_sensore_di_prossimita);
         sensorStatusTV = findViewById(R.id.sensorStatusTV);
         // calling sensor service.

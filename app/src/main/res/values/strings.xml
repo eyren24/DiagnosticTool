@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Hospital Phone</string>
+    <string name="power_button_check">Power Button Check</string>
+    <string name="camera_check">Camera check</string>
+    <string name="select">select:</string>
+    <string name="gyroscope">Gyroscope</string>
+    <string name="fingerprint_sensor">Fingerprint sensor</string>
+    <string name="thermometer">Thermometer</string>
+    <string name="brightness_sensor">Brightness sensor</string>
+    <string name="proximity_sensor">Proximity sensor</string>
+    <string name="magnetometer">Magnetometer</string>
+    <string name="accelerometer">Accelerometer</string>
 </resources>

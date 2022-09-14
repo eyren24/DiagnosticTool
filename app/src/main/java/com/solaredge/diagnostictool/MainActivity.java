@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         NavigationView mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setSelected(false);
@@ -34,11 +33,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToCamera();
                 finish();
                 return true;
-            case R.id.giroscopio:
+            case R.id.gyroscope:
                 goToGiroscopio();
                 finish();
                 return true;
-            case R.id.accelerometro:
+            case R.id.accelerometer:
                 goToAccelerometro();
                 finish();
                 return true;
@@ -50,15 +49,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToFingerprintSensor();
                 finish();
                 return true;
-            case R.id.SensoreDiLuminosita:
+            case R.id.brightness_sensor:
                 goToSensoreDiLuminosita();
                 finish();
                 return true;
-            case R.id.termometro:
+            case R.id.termometer:
                 goToTermometro();
                 finish();
                 return true;
-            case R.id.magnetometro:
+            case R.id.magnetometer:
                 goToMagnetometer();
                 finish();
                 return true;

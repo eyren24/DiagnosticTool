@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -19,10 +18,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 public class TestAccellerometro extends AppCompatActivity implements SensorEventListener {
     int stepCount = -1;
-    private TextView textViewStepCounter, textViewStepDetector;
     private SensorManager sensorManager;
     private Sensor mStepCounter;
-    private boolean isCounterSensorPresent;
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
 
@@ -36,27 +33,21 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         setContentView(R.layout.activity_test_accellerometro);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        textViewStepCounter = findViewById(R.id.textViewStepCounter);
-        textViewStepDetector = findViewById(R.id.textViewStepDetector);
+        TextView textViewStepCounter = findViewById(R.id.textViewStepCounter);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             mStepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            isCounterSensorPresent = true;
         } else {
-            textViewStepCounter.setText("Counter sensor is not present");
-            isCounterSensorPresent = false;
+            textViewStepCounter.setText(String.valueOf("Counter sensor is not present"));
         }
         extendedFab = findViewById(R.id.extended_fab);
         extendedFab.shrink();
-        extendedFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                extendedFab.extend();
-                click++;
-                if (click == 2) {
-                    goToHome();
-                }
+        extendedFab.setOnClickListener(view -> {
+            extendedFab.extend();
+            click++;
+            if (click == 2) {
+                goToHome();
             }
         });
     }

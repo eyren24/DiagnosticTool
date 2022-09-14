@@ -28,7 +28,6 @@ public class TestSensoreDiLuminosita extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_sensore_di_luminosita);
         lightLevel = (TextView) findViewById(R.id.lumus);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);

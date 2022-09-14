@@ -24,7 +24,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_giroscopio);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -32,7 +31,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             if (acceleroSensor != null) {
                 sensorManager.registerListener(this, acceleroSensor, SensorManager.SENSOR_DELAY_NORMAL);
             }else{
-                ((TextView) findViewById(R.id.accelerometer)).setText("Sorry, sensor not available for this device.");
+                ((TextView) findViewById(R.id.accelerometer)).setText(String.valueOf("Sorry, sensor not available for this device."));
             }
         } else {
             Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
@@ -71,8 +70,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             double X = (double) Math.round(sensorEvent.values[0] * 10d) / 10d;
             double Y = (double) Math.round(sensorEvent.values[1] * 10d) / 10d;
             double Z = (double) Math.round(sensorEvent.values[2] * 10d) / 10d;
-            ((TextView) findViewById(R.id.accelerometer)).setText("X: " + X + ", Y: " + Y + ", Z: " + Z);
-            ((TextView) findViewById(R.id.label)).setText("if you see the value change, it works!");
+            ((TextView) findViewById(R.id.accelerometer)).setText(String.valueOf("X: " + X + ", Y: " + Y + ", Z: " + Z));
+            ((TextView) findViewById(R.id.label)).setText(String.valueOf("if you see the value change, it works!"));
         }
     }
 

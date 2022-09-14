@@ -5,13 +5,13 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.hardware.sensor.proximity" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -29,27 +29,35 @@
         tools:targetApi="31">
         <activity
             android:name=".TestTermometro"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestMagnetometer"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestSensoreDiLuminosita"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestFingerPrint"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestSensoreDiProssimita"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestAccellerometro"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestGiroscopio"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TestFotocamera"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
