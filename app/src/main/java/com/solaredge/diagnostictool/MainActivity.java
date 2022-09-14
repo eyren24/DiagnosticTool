@@ -40,10 +40,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.accelerometro:
                 goToAccelerometro();
+                finish();
+                return true;
+            case R.id.SensoreDiProssimita:
+                goToSensoreDiProssimita();
+                finish();
+                return true;
             default:
                 return false;
         }
     }
+
+
 
     @Override
     protected void onResume(){
@@ -63,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToAccelerometro() {
         Intent switchActivityIntent = new Intent(this, TestAccellerometro.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToSensoreDiProssimita() {
+        Intent switchActivityIntent = new Intent(this, TestSensoreDiProssimita.class);
         startActivity(switchActivityIntent);
     }
 }
