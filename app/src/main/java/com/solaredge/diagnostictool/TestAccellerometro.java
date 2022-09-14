@@ -92,4 +92,10 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
+    @Override
+    public void onBackPressed(){
+        goToHome();
+        finish();
+        //super.onBackPressed();
+    }
 }

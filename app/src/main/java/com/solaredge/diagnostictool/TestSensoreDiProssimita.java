@@ -3,26 +3,36 @@ package com.solaredge.diagnostictool;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class TestSensoreDiProssimita extends AppCompatActivity {
 
     private TextView sensorStatusTV;
     private SensorManager sensorManager;
     private Sensor proximitySensor;
-
+    private int puff = 0;
+    private TextView magia;
+    private ImageView bunny;
+    private ExtendedFloatingActionButton extendedFab;
+    private int click=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test_sensore_di_prossimita);
         sensorStatusTV = findViewById(R.id.sensorStatusTV);
-
         // calling sensor service.
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -41,6 +51,18 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
                     proximitySensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
+        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab.shrink();
+        extendedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extendedFab.extend();
+                click ++;
+                if (click == 2){
+                    goToHome();
+                }
+            }
+        });
     }
 
     // calling the sensor event class to detect
@@ -53,14 +75,34 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            // check if the sensor type is proximity sensor.
+            magia = findViewById(R.id.magic);
+            bunny = findViewById(R.id.rabbit);
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 if (event.values[0] == 0) {
                     sensorStatusTV.setText("Near");
+                    if(puff<1){
+                        magia.setText("PUFF!");
+                        bunny.setVisibility(View.GONE);
+                        puff++;
+                    }
                 } else {
                     sensorStatusTV.setText("Away");
                 }
             }
         }
     };
+    public void onResume(){
+        super.onResume();
+        puff=0;
+    }
+    private void goToHome() {
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
+    }
+    @Override
+    public void onBackPressed(){
+        goToHome();
+        finish();
+        //super.onBackPressed();
+    }
 }
