@@ -28,6 +28,9 @@
         android:theme="@style/Theme.DiagnosticTool"
         tools:targetApi="31">
         <activity
+            android:name=".TestSensoreDiLuminosita"
+            android:exported="false" />
+        <activity
             android:name=".TestFingerPrint"
             android:exported="false" />
         <activity
