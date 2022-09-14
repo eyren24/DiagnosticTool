@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToMagnetometer();
                 finish();
                 return true;
+            case R.id.powerbutton:
+                goToPowerButtonCheck();
+                finish();
+                return true;
             default:
                 return false;
         }
@@ -109,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToMagnetometer() {
         Intent switchActivityIntent = new Intent(this, TestMagnetometer.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToPowerButtonCheck() {
+        Intent switchActivityIntent = new Intent(this, TestPowerButton.class);
         startActivity(switchActivityIntent);
     }
 }
