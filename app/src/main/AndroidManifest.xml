@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
 
-
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
@@ -28,37 +27,40 @@
         android:theme="@style/Theme.DiagnosticTool"
         tools:targetApi="31">
         <activity
-            android:name=".TestTermometro"
-            android:screenOrientation="portrait"
+            android:name=".TestPowerButton"
             android:exported="false" />
+        <activity
+            android:name=".TestTermometro"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestMagnetometer"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestSensoreDiLuminosita"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestFingerPrint"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestSensoreDiProssimita"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestAccellerometro"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestGiroscopio"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestFotocamera"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
