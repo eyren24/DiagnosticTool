@@ -20,7 +20,7 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test_sensore_di_prossimita);
         sensorStatusTV = findViewById(R.id.sensorStatusTV);
 
         // calling sensor service.
@@ -56,10 +56,9 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
             // check if the sensor type is proximity sensor.
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 if (event.values[0] == 0) {
-
                     sensorStatusTV.setText("Near");
                 } else {
-
+                    sensorStatusTV.setText("Away");
                 }
             }
         }

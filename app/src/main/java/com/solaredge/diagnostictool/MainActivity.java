@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToAccelerometro();
                 finish();
                 return true;
-            case R.id.SensoreDiProssimita:
+            case R.id.proximity:
                 goToSensoreDiProssimita();
                 finish();
                 return true;
