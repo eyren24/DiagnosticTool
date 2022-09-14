@@ -24,8 +24,7 @@ public class TestSensoreDiProssimita extends AppCompatActivity {
     private int puff = 0;
     private TextView magia;
     private ImageView bunny;
-    // calling the sensor event class to detect
-    // the change in data when sensor starts working.
+
     SensorEventListener proximitySensorEventListener = new SensorEventListener() {
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
