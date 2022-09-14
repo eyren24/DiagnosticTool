@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToSensoreDiProssimita();
                 finish();
                 return true;
+            case R.id.fingerprintSensor:
+                goToFingerprintSensor();
+                finish();
+                return true;
             default:
                 return false;
         }
@@ -75,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void goToSensoreDiProssimita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiProssimita.class);
+        startActivity(switchActivityIntent);
+    }
+    private void goToFingerprintSensor() {
+        Intent switchActivityIntent = new Intent(this, TestFingerPrint.class);
         startActivity(switchActivityIntent);
     }
 }

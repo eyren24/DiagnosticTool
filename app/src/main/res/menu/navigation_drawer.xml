@@ -43,7 +43,7 @@
                 android:icon="@drawable/nterm"
                 android:title="Thermometer" />
             <item
-                android:id="@+id/SensoreDiImpronta"
+                android:id="@+id/fingerprintSensor"
                 android:checkable="true"
                 android:icon="@drawable/nsi"
                 android:title="Fingerprint sensor" />
