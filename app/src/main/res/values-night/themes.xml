@@ -16,8 +16,8 @@
 
     <style name="AppTheme" parent="Widget.MaterialComponents.BottomNavigationView">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="android:background">#a1a1a1</item>
         <item name="colorAccent">@color/black</item>
     </style>
 
