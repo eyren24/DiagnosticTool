@@ -18,7 +18,7 @@
         <!-- Customize your theme here. -->
         <item name="itemIconTint">#f52f2f</item>
         <item name="android:background">#212121</item>
-        <item name="itemTextColor">#fff</item>
+        <item name="itemTextColor">@color/bnv_tab_item_foreground</item>
     </style>
 
 </resources>

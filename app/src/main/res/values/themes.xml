@@ -14,11 +14,11 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Widget.MaterialComponents.BottomNavigationView">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/purple_700</item>
+        <item name="itemIconTint">#f52f2f</item>
+        <item name="android:background">#212121</item>
+        <item name="itemTextColor">@color/bnv_tab_item_foreground</item>
     </style>
 
 </resources>
