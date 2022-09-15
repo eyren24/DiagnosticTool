@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/home"
         android:name="itemTextAppearanceInactive"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home" />
     <item
+        android:id="@+id/history"
         android:name="itemTextAppearanceActive"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="History" />

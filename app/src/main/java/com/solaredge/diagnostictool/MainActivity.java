@@ -1,16 +1,20 @@
 package com.solaredge.diagnostictool;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +22,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setSelected(false);
         mNavigationView.setNavigationItemSelectedListener(this);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+    }
+
+    private void updateNavigationBarState(int actionId){
+        Menu menu = bottomNavigationView.getMenu();
+
+        for (int i = 0, size = menu.size(); i < size; i++) {
+            MenuItem item = menu.getItem(i);
+            item.setChecked(item.getItemId() == actionId);
+        }
     }
 
     @Override
@@ -32,42 +46,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.camera:
                 goToCamera();
                 finish();
-                return true;
+                break;
             case R.id.gyroscope:
                 goToGiroscopio();
                 finish();
-                return true;
+                break;
             case R.id.accelerometer:
                 goToAccelerometro();
                 finish();
-                return true;
+                break;
             case R.id.proximity:
                 goToSensoreDiProssimita();
                 finish();
-                return true;
+                break;
             case R.id.fingerprintSensor:
                 goToFingerprintSensor();
                 finish();
-                return true;
+                break;
             case R.id.brightness_sensor:
                 goToSensoreDiLuminosita();
                 finish();
-                return true;
+                break;
             case R.id.termometer:
                 goToTermometro();
                 finish();
-                return true;
+                break;
             case R.id.magnetometer:
                 goToMagnetometer();
                 finish();
-                return true;
+                break;
             case R.id.powerbutton:
                 goToPowerButtonCheck();
                 finish();
-                return true;
+                break;
+            case R.id.history:
+                Toast.makeText(getApplicationContext(), "Coming soon!", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.home:
+                Toast.makeText(getApplicationContext(), "Home!", Toast.LENGTH_LONG).show();
+                break;
             default:
                 return false;
         }
+        updateNavigationBarState(item.getItemId());
+        return true;
     }
 
 
@@ -103,18 +125,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent switchActivityIntent = new Intent(this, TestFingerPrint.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToSensoreDiLuminosita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiLuminosita.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToTermometro() {
         Intent switchActivityIntent = new Intent(this, TestTermometro.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToMagnetometer() {
         Intent switchActivityIntent = new Intent(this, TestMagnetometer.class);
         startActivity(switchActivityIntent);
     }
+
     private void goToPowerButtonCheck() {
         Intent switchActivityIntent = new Intent(this, TestPowerButton.class);
         startActivity(switchActivityIntent);
