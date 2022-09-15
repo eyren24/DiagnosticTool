@@ -24,7 +24,6 @@
         app:layout_constraintVertical_bias="0.589" />
 
     <TextView
-        android:id="@+id/term"
         android:layout_width="wrap_content"
         android:layout_height="159dp"
         android:fontFamily="@font/audiowide"
@@ -39,7 +38,6 @@
         app:layout_constraintVertical_bias="0.248" />
 
     <TextView
-        android:id="@+id/destermometro"
         android:layout_width="320dp"
         android:layout_height="51dp"
         android:fontFamily="@font/creepster"

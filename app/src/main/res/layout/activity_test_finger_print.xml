@@ -22,7 +22,6 @@
         app:layout_constraintVertical_bias="0.577" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="95dp"
         android:fontFamily="@font/creepster"
@@ -37,7 +36,6 @@
         app:layout_constraintVertical_bias="0.787" />
 
     <TextView
-        android:id="@+id/textViewStepDetector3"
         android:layout_width="wrap_content"
         android:layout_height="159dp"
         android:fontFamily="@font/audiowide"

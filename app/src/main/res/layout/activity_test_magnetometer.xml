@@ -7,7 +7,6 @@
     tools:context=".TestMagnetometer">
 
     <TextView
-        android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:fontFamily="@font/creepster"
@@ -54,7 +53,6 @@
         app:layout_constraintVertical_bias="0.977" />
 
     <TextView
-        android:id="@+id/textView9"
         android:layout_width="340dp"
         android:layout_height="340dp"
         android:background="@drawable/compas"
