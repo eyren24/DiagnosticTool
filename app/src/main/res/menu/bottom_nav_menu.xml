@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:name="itemTextAppearanceInactive"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+    <item
+        android:name="itemTextAppearanceActive"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="History" />
+
+</menu>

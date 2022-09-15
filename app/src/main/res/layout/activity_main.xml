@@ -7,61 +7,74 @@
     android:textAlignment="center"
     tools:context=".MainActivity">
 
-
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="225dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="104dp"
+        android:id="@+id/phonelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:autoSizeTextType="uniform"
+        android:baselineAligned="false"
         android:fontFamily="@font/akronim"
         android:shadowColor="@color/white"
         android:text="Phone"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textSize="52sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
-        app:layout_constraintStart_toStartOf="@+id/videoView"
-        app:layout_constraintTop_toTopOf="@+id/videoView" />
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.661" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="225dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="32dp"
+        android:id="@+id/hospitallabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/akronim"
         android:shadowColor="@color/white"
         android:text="HOSPITAL"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textSize="52sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
-        app:layout_constraintStart_toStartOf="@+id/videoView"
-        app:layout_constraintTop_toTopOf="@+id/videoView" />
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.175" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
         android:backgroundTint="#03A9F4"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/videoView"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/navigation_drawer" />
+        app:menu="@menu/navigation_drawer"  android:layout_height="0dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigationView"
+        style="@style/AppTheme"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
