@@ -140,7 +140,7 @@ public class TestFotocamera extends AppCompatActivity {
         }
     }
 
-    // Start the preview
+
     private void cameraPreview() {
         SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
         Surface surface = new Surface(surfaceTexture);

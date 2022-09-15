@@ -55,7 +55,7 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:backgroundTint="#03A9F4"
+        android:backgroundTint="#000000"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"

@@ -17,7 +17,7 @@
     <style name="AppTheme" parent="Widget.MaterialComponents.BottomNavigationView">
         <!-- Customize your theme here. -->
         <item name="itemIconTint">#f52f2f</item>
-        <item name="android:background">#000</item>
+        <item name="android:background">#212121</item>
         <item name="itemTextColor">#fff</item>
     </style>
 

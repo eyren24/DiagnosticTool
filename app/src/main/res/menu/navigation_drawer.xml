@@ -10,7 +10,8 @@
                 android:id="@+id/camera"
                 android:checkable="true"
                 android:icon="@drawable/ncam"
-                android:title="@string/camera_check" />
+                android:title="@string/camera_check"
+                android:iconTint="@android:color/holo_blue_dark"/>
             <item
                 android:id="@+id/gyroscope"
                 android:checkable="true"
