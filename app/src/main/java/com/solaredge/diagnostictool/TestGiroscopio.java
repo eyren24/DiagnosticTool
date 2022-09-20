@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,11 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
 
         // get component from ui
         switchMaterial = findViewById(R.id.switchMaterial);
-        switchMaterial.setChecked(true);
+        if(MyService.isAlive()){
+            switchMaterial.setChecked(true);
+        }else{
+            switchMaterial.setChecked(false);
+        }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -59,6 +64,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                             goToHome();
                         }
                     }, 500);
+                }
+            }
+        });
+        switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    MyService.setAlive(true);
+                }else{
+                    MyService.setAlive(false);
                 }
             }
         });
