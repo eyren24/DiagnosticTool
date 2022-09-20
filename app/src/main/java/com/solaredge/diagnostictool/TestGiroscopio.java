@@ -32,7 +32,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_test_giroscopio);
 
         // get Intent
-        intent = new Intent(MyService.class.getName());
+        intent = new Intent(this, MyService.class);
 
         // get component from ui
         switchMaterial = findViewById(R.id.switchMaterial);
@@ -76,7 +76,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     MyService.setAlive(true);
-                    getApplicationContext().startService(intent);
+                    startService(intent);
                 }else{
                     MyService.setAlive(false);
                 }
