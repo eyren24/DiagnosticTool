@@ -32,7 +32,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         // get component from ui
         switchMaterial = findViewById(R.id.switchMaterial);
         if(MyService.isAlive()){
-            switchMaterial.setActivated(true);
+            switchMaterial.setChecked(true);
         }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -65,7 +65,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             }
         });
 
-        if (switchMaterial.isActivated()){
+        if (switchMaterial.isChecked()){
             MyService.setAlive(true);
         }else {
             MyService.setAlive(false);
