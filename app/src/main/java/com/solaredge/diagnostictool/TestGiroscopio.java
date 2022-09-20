@@ -1,14 +1,8 @@
 package com.solaredge.diagnostictool;
 
-import static java.lang.Thread.sleep;
-
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -61,37 +55,46 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 handler.post(new Runnable() {
                     public void run() {
                         Log.e("TEST", String.valueOf(lastValue));
-                        if(alert>30){
-                            textView.setTextColor(Color.parseColor("#00ff44"));
-                        }else{
-                            if(alert>10){
-                                textView.setTextColor(Color.parseColor("#e1ff00"));
-                            }else{
-                                textView.setTextColor(Color.parseColor("#ff0000"));
-                            }
-                        }
-                        textView.setText(String.valueOf(alert));
-                        if (lastValue <= 10 && lastValue >= 8){
+                        if (lastValue <= 10 && lastValue >= 8) {
                             Log.e("TEST", "ALERT ++");
                             if (alert == 0) return;
-                            alert --;
-                        }else{
+                            alert--;
+                        } else {
                             alert = 60;
                         }
-                        if (alert == 0){
+                        if (alert == 0) {
                             switchMaterial.setChecked(false);
                             Log.e("TEST", "ALERT == 3");
                             Intent intent = new Intent("com.solaredge.diagnostictool");
                             intent.putExtra("value", String.valueOf(lastValue));
                             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                            alert = 0;
+                            messageBox();
                         }
                     }
                 });
             }
         };
 
-        timer.schedule(timertask, 0, 1000);
+        if (MyService.isLifeGuard()) {
+            timer.schedule(timertask, 0, 1000);
+            switchMaterial.setChecked(true);
+            startService(new Intent(TestGiroscopio.this, MyService.class));
+        }else{
+            switchMaterial.setChecked(false);
+        }
+        switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && !MyService.isLifeGuard()) {
+                    stopService(new Intent(TestGiroscopio.this, MyService.class));
+                    Log.e("TEST", "STARTING SERVICE");
+                } else {
+                    startService(new Intent(TestGiroscopio.this, MyService.class));
+                    Log.e("TEST", "STOP SERVICE");
+                }
+            }
+        });
+
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -123,44 +126,26 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 }
             }
         });
-
-        switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    startService(new Intent(TestGiroscopio.this, MyService.class));
-                    Log.e("TEST", "STARTING SERVICE");
-                }else {
-                    stopService(new Intent(TestGiroscopio.this, MyService.class));
-                    Log.e("TEST", "STOP SERVICE");
-                }
-            }
-        });
     }
 
-    public Dialog messageBox(){
+    public Dialog messageBox() {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("YO OK?");
-            builder.setMessage("Are u alive grandFather?");
+        builder.setMessage("Are u alive grandFather?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // You don't have to do anything here if you just
-                // want it dismissed when clicked
+                alert = 60;
             }
         });
         builder.setNegativeButton("No, Call emergency!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                // CALL EMERGENCY
             }
         });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    public static void yolo(String text){
-        textView.setText(text);
     }
 
     @Override
