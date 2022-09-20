@@ -100,7 +100,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 } else {
                     stopService(new Intent(TestGiroscopio.this, MyService.class));
                     timer.cancel();
-                    timer.purge();
                 }
             }
         });
