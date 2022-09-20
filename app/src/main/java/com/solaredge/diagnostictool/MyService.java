@@ -18,8 +18,20 @@ import java.net.Inet4Address;
 import java.util.Calendar;
 
 public class MyService extends IntentService {
+
+    protected static boolean lifeGuard = false;
+
     public static volatile boolean shouldStop = false;
+
     private DBHandler dbHandler;
+
+    public static boolean isLifeGuard() {
+        return lifeGuard;
+    }
+
+    public static void setLifeGuard(boolean lifeGuard) {
+        MyService.lifeGuard = lifeGuard;
+    }
 
     public MyService() {
         super(MyService.class.getSimpleName());
