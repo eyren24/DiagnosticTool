@@ -24,11 +24,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
     protected SwitchMaterial switchMaterial;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_giroscopio);
+
+        // get Intent
+        intent = new Intent(MyService.class.getName());
 
         // get component from ui
         switchMaterial = findViewById(R.id.switchMaterial);
@@ -67,10 +71,12 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 }
             }
         });
+
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     MyService.setAlive(true);
+                    getApplicationContext().startService(intent);
                 }else{
                     MyService.setAlive(false);
                 }
@@ -98,6 +104,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             double Z = (double) Math.round(sensorEvent.values[2] * 10d) / 10d;
             ((TextView) findViewById(R.id.accelerometer)).setText(String.valueOf("X: " + X + ", Y: " + Y + ", Z: " + Z));
             ((TextView) findViewById(R.id.label)).setText(String.valueOf("if you see the value change, it works!"));
+            intent.putExtra("value", sensorEvent.values[2]);
         }
     }
 

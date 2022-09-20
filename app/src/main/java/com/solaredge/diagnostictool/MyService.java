@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -33,6 +34,8 @@ public class MyService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId){
         stopSelf();
+        String value = intent.getStringExtra("value");
+        Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG).show();
         return super.onStartCommand(intent, flags, startId);
     }
 }
