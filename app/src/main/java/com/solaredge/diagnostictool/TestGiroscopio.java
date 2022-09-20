@@ -55,7 +55,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-
                         if(alert>30){
                             textView.setTextColor(Color.parseColor("#00ff44"));
                         }else{
@@ -65,8 +64,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                                 textView.setTextColor(Color.parseColor("#ff0000"));
                             }
                         }
+                        textView.setText(String.valueOf(alert));
                         if (lastValue <= 10 && lastValue >= 8) {
-
                             if (alert == 0) return;
                             alert--;
                         } else {
@@ -74,11 +73,11 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         }
                         if (alert == 0) {
                             switchMaterial.setChecked(false);
-
+                            messageBox();
                             Intent intent = new Intent("com.solaredge.diagnostictool");
                             intent.putExtra("value", String.valueOf(lastValue));
                             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                            messageBox();
+
                         }
                     }
                 });
@@ -96,11 +95,12 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && !MyService.isLifeGuard()) {
-                    stopService(new Intent(TestGiroscopio.this, MyService.class));
-                    Log.e("TEST", "STARTING SERVICE");
-                } else {
                     startService(new Intent(TestGiroscopio.this, MyService.class));
-                    Log.e("TEST", "STOP SERVICE");
+                    timer.schedule(timertask, 0, 1000);
+                } else {
+                    stopService(new Intent(TestGiroscopio.this, MyService.class));
+                    timer.cancel();
+                    timer.purge();
                 }
             }
         });
@@ -138,7 +138,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         });
     }
 
-    public Dialog messageBox() {
+    public void messageBox() {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("YO OK?");
@@ -155,7 +155,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             }
         });
         // Create the AlertDialog object and return it
-        return builder.create();
+        builder.create();
     }
 
     @Override
