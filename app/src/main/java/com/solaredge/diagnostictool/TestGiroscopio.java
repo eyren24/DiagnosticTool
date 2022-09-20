@@ -37,6 +37,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private int alert = 60;
     protected double lastValue = 0;
     private static TextView textView;
+    private boolean timerStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
 
         if (MyService.isLifeGuard()) {
             timer.schedule(timertask, 0, 1000);
+            timerStatus = true;
             switchMaterial.setChecked(true);
             startService(new Intent(TestGiroscopio.this, MyService.class));
         }else{
@@ -96,11 +98,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && !MyService.isLifeGuard()) {
                     startService(new Intent(TestGiroscopio.this, MyService.class));
+                    if (!timerStatus){
+                        Timer timer = new Timer();
+                    }
                     timer.schedule(timertask, 0, 1000);
                 } else {
                     stopService(new Intent(TestGiroscopio.this, MyService.class));
-                    timer.cancel();
-                    timer.purge();
+                    if (timerStatus){
+                        timer.cancel();
+                    }
                 }
             }
         });
