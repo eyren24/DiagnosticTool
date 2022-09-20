@@ -15,17 +15,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class TestGiroscopio extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
+    protected SwitchMaterial switchMaterial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_giroscopio);
+
+        // get component from ui
+        switchMaterial = findViewById(R.id.switchMaterial);
+        if(MyService.isAlive()){
+            switchMaterial.setActivated(true);
+        }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -57,8 +65,12 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             }
         });
 
+        if (switchMaterial.isActivated()){
+            MyService.setAlive(true);
+        }else {
+            MyService.setAlive(false);
+        }
     }
-
 
     @Override
     public void onBackPressed() {

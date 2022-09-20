@@ -10,6 +10,15 @@ import androidx.annotation.Nullable;
 import java.net.Inet4Address;
 
 public class MyService extends Service {
+    private static boolean isAlive = false;
+
+    public static boolean isAlive() {
+        return isAlive;
+    }
+
+    public static void setAlive(boolean alive){
+        isAlive = alive;
+    }
 
     @Override
     public void onDestroy(){
