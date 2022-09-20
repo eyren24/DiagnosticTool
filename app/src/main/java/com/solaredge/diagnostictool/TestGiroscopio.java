@@ -1,13 +1,13 @@
 package com.solaredge.diagnostictool;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +20,16 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private SensorManager sensorManager;
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
+    private Intent intent;
+    private boolean mStomLoop;
+    protected Button startButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_giroscopio);
+
+        intent = new Intent(getApplicationContext(), MyService.class);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
             Sensor acceleroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -36,6 +41,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         } else {
             Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
         }
+
+        startButton = findViewById(R.id.start);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(intent);
+            }
+        });
+
         extendedFab = findViewById(R.id.extended_fab);
         extendedFab.shrink();
         extendedFab.setOnClickListener(new View.OnClickListener() {
