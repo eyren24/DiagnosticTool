@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,8 +58,13 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void onClick(View view) {
                 extendedFab.extend();
                 click++;
-                if (click == 2) {
-                    goToHome();
+                if (click == 1) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            goToHome();
+                        }
+                    }, 500);
                 }
             }
         });

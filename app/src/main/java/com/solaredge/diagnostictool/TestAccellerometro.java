@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -46,8 +47,14 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         extendedFab.setOnClickListener(view -> {
             extendedFab.extend();
             click++;
-            if (click == 2) {
-                goToHome();
+            if (click == 1) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        goToHome();
+                    }
+                }, 500);
+
             }
         });
     }
@@ -71,6 +78,7 @@ public class TestAccellerometro extends AppCompatActivity implements SensorEvent
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null)
             sensorManager.registerListener(this, mStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
     }
+
 
     @Override
     public void onPause() {

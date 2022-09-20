@@ -12,6 +12,7 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -87,8 +88,13 @@ public class TestFotocamera extends AppCompatActivity {
             public void onClick(View view) {
                 extendedFab.extend();
                 click++;
-                if (click == 2) {
-                    goToHome();
+                if (click == 1) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            goToHome();
+                        }
+                    }, 500);
                 }
             }
         });

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,8 +38,13 @@ public class TestPowerButton extends AppCompatActivity {
             public void onClick(View view) {
                 extendedFab.extend();
                 click++;
-                if (click == 2) {
-                    goToHome();
+                if (click == 1) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            goToHome();
+                        }
+                    }, 500);
                 }
             }
         });
