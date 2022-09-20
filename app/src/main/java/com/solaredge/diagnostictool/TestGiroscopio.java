@@ -3,6 +3,7 @@ package com.solaredge.diagnostictool;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -54,9 +55,18 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        Log.e("TEST", String.valueOf(lastValue));
+
+                        if(alert>30){
+                            textView.setTextColor(Color.parseColor("#00ff44"));
+                        }else{
+                            if(alert>10){
+                                textView.setTextColor(Color.parseColor("#e1ff00"));
+                            }else{
+                                textView.setTextColor(Color.parseColor("#ff0000"));
+                            }
+                        }
                         if (lastValue <= 10 && lastValue >= 8) {
-                            Log.e("TEST", "ALERT ++");
+
                             if (alert == 0) return;
                             alert--;
                         } else {
@@ -64,7 +74,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         }
                         if (alert == 0) {
                             switchMaterial.setChecked(false);
-                            Log.e("TEST", "ALERT == 3");
+
                             Intent intent = new Intent("com.solaredge.diagnostictool");
                             intent.putExtra("value", String.valueOf(lastValue));
                             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
