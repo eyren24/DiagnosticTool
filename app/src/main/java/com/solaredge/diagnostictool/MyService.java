@@ -1,41 +1,53 @@
 package com.solaredge.diagnostictool;
 
+import android.app.IntentService;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.net.Inet4Address;
+import java.util.Calendar;
 
-public class MyService extends Service {
-    private static boolean isAlive = false;
+public class MyService extends IntentService {
+    public static volatile boolean shouldStop = false;
+    private DBHandler dbHandler;
 
-    public static boolean isAlive() {
-        return isAlive;
+    public MyService() {
+        super(MyService.class.getSimpleName());
     }
 
-    public static void setAlive(boolean alive){
-        isAlive = alive;
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
-
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    public int onStartCommand(Intent intent, int flags, int startId){
-        stopSelf();
-        String value = intent.getStringExtra("value");
-        Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG).show();
-        return super.onStartCommand(intent, flags, startId);
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String inc = intent.getStringExtra("value");
+            dbHandler.addNewCourse(inc, String.valueOf(Calendar.getInstance().getTime()));
+        }
+    };
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        dbHandler = new DBHandler(getApplicationContext());
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.solaredge.diagnostictool");
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+        if(shouldStop) {
+            unregisterReceiver(broadcastReceiver);
+            stopSelf();
+            return;
+        }
     }
 }

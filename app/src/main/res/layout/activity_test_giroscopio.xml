@@ -24,6 +24,7 @@
         app:layout_constraintVertical_bias="0.977" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="159dp"
         android:fontFamily="@font/audiowide"
@@ -76,5 +77,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.956" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:gravity="center"
+        android:layout_width="132dp"
+        android:layout_height="65dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.619" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
