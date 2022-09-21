@@ -21,9 +21,19 @@ public class MyService extends IntentService {
 
     protected static boolean lifeGuard = false;
 
+    private static boolean hasStarted = false;
+
     public static volatile boolean shouldStop = false;
 
     private DBHandler dbHandler;
+
+    public static boolean isHasStarted() {
+        return hasStarted;
+    }
+
+    public static void setHasStarted(boolean hasStarted) {
+        MyService.hasStarted = hasStarted;
+    }
 
     public static boolean isLifeGuard() {
         return lifeGuard;

@@ -1,6 +1,5 @@
 package com.solaredge.diagnostictool;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -37,7 +35,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private int alert = 60;
     protected double lastValue = 0;
     private static TextView textView;
-    private boolean timerStatus = false;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,67 +44,65 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
 
         switchMaterial = findViewById(R.id.switchMaterial);
 
-        Timer timer = new Timer();
         textView = findViewById(R.id.textView);
         // create handler
         handler = new Handler();
         // create timeTask
-        timertask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        if(alert>30){
-                            textView.setTextColor(Color.parseColor("#00ff44"));
-                        }else{
-                            if(alert>10){
-                                textView.setTextColor(Color.parseColor("#e1ff00"));
-                            }else{
-                                textView.setTextColor(Color.parseColor("#ff0000"));
+        if (!MyService.isHasStarted()) {
+            timertask = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            MyService.setHasStarted(true);
+                            if (alert > 30) {
+                                textView.setTextColor(Color.parseColor("#00ff44"));
+                            } else {
+                                if (alert > 10) {
+                                    textView.setTextColor(Color.parseColor("#e1ff00"));
+                                } else {
+                                    textView.setTextColor(Color.parseColor("#ff0000"));
+                                }
+                            }
+                            textView.setText(String.valueOf(alert));
+                            if (lastValue <= 10 && lastValue >= 8) {
+                                if (alert == 0) return;
+                                alert--;
+                            } else {
+                                alert = 60;
+                            }
+                            if (alert == 0) {
+                                switchMaterial.setChecked(false);
+                                messageBox();
+                                Intent intent = new Intent("com.solaredge.diagnostictool");
+                                intent.putExtra("value", String.valueOf(lastValue));
+                                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+
                             }
                         }
-                        textView.setText(String.valueOf(alert));
-                        if (lastValue <= 10 && lastValue >= 8) {
-                            if (alert == 0) return;
-                            alert--;
-                        } else {
-                            alert = 60;
-                        }
-                        if (alert == 0) {
-                            switchMaterial.setChecked(false);
-                            messageBox();
-                            Intent intent = new Intent("com.solaredge.diagnostictool");
-                            intent.putExtra("value", String.valueOf(lastValue));
-                            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-
-                        }
-                    }
-                });
-            }
-        };
+                    });
+                }
+            };
+        }
 
         if (MyService.isLifeGuard()) {
-            timer.schedule(timertask, 0, 1000);
-            timerStatus = true;
+            // set switch true
             switchMaterial.setChecked(true);
+            // start service
             startService(new Intent(TestGiroscopio.this, MyService.class));
-        }else{
+        } else {
+            // set switch false
             switchMaterial.setChecked(false);
         }
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !MyService.isLifeGuard()) {
+                if (isChecked) {
+
                     startService(new Intent(TestGiroscopio.this, MyService.class));
-                    if (!timerStatus){
-                        Timer timer = new Timer();
-                    }
-                    timer.schedule(timertask, 0, 1000);
                 } else {
+
                     stopService(new Intent(TestGiroscopio.this, MyService.class));
-                    if (timerStatus){
-                        timer.cancel();
-                    }
                 }
             }
         });
