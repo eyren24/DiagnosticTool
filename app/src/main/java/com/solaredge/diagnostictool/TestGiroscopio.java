@@ -7,9 +7,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +41,11 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     protected double lastValue = 0;
     private static TextView textView;
     private Timer timer;
+    private Button btn;
+
+
+    public TestGiroscopio() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_test_giroscopio);
 
         switchMaterial = findViewById(R.id.switchMaterial);
-
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.alarm);
         textView = findViewById(R.id.textView);
         // create handler
         handler = new Handler();
@@ -81,6 +91,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                             }
                         }
                     });
+
                 }
             };
         }
@@ -136,6 +147,13 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         }
                     }, 500);
                 }
+            }
+        });
+        btn = findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
             }
         });
     }
