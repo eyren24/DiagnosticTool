@@ -32,7 +32,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private ExtendedFloatingActionButton extendedFab;
     private int click = 0;
     private SwitchMaterial switchMaterial;
-
     protected static double lastValue = 0;
 
     private TextView textView;
@@ -42,16 +41,45 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_giroscopio);
         switchMaterial = findViewById(R.id.switchMaterial);
-        switchMaterial.setChecked(false);
+
         textView = findViewById(R.id.textView);
 
-        startService(new Intent(TestGiroscopio.this, MyService.class));
+        if (!MyService.isServiceIsRunning()){
+            startService(new Intent(TestGiroscopio.this, MyService.class));
+        }
+
+        if (MyService.isLifeGuard()){
+            Handler handler = new Handler();
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            if(MyService.isLifeGuard()){
+                                textView.setText(String.valueOf(MyService.getCountdown()));
+                                if (MyService.getCountdown() == 0) {
+                                    createMessage(getApplicationContext());
+                                    MyService.stopLifeGuard();
+                                    switchMaterial.setChecked(false);
+                                }
+                            }else {
+                                textView.setText("LifeGuard");
+                            }
+                        }
+                    });
+                }
+            }, 0, 1000);
+            switchMaterial.setChecked(true);
+        }else{
+            switchMaterial.setChecked(false);
+        }
 
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    MyService.setLifeGuard(true);
+                    MyService.startLifeGuard();
                     Handler handler = new Handler();
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -59,10 +87,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         public void run() {
                             handler.post(new Runnable() {
                                 public void run() {
-                                    textView.setText(String.valueOf(MyService.getCountdown()));
-                                    if (MyService.getCountdown() == 0) {
-                                        createMessage(getApplicationContext());
-                                        MyService.stopLifeGuard();
+                                    if(MyService.isLifeGuard()){
+                                        textView.setText(String.valueOf(MyService.getCountdown()));
+                                        if (MyService.getCountdown() == 0) {
+                                            createMessage(getApplicationContext());
+                                            MyService.stopLifeGuard();
+                                            switchMaterial.setChecked(false);
+                                        }
+                                    }else {
+                                        textView.setText("LifeGuard");
                                     }
                                 }
                             });
@@ -105,10 +138,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 }
             }
         });
-    }
-
-    public static double getLastValue() {
-        return TestGiroscopio.lastValue;
     }
 
     public void createMessage(Context context) {
