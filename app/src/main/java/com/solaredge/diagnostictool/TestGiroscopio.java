@@ -1,5 +1,9 @@
 package com.solaredge.diagnostictool;
 
+import static java.lang.Thread.sleep;
+
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -7,11 +11,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -39,11 +45,13 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         switchMaterial.setChecked(false);
         textView = findViewById(R.id.textView);
 
+        startService(new Intent(TestGiroscopio.this, MyService.class));
+
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    startService(new Intent(TestGiroscopio.this, MyService.class));
+                    MyService.setLifeGuard(true);
                     Handler handler = new Handler();
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -51,18 +59,18 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         public void run() {
                             handler.post(new Runnable() {
                                 public void run() {
-                                    textView.setText(MyService.getCountdown());
-                                    if(MyService.getCountdown() == 0){
-                                        Toast.makeText(getApplicationContext(), "Uploading result on db", Toast.LENGTH_LONG).show();
+                                    textView.setText(String.valueOf(MyService.getCountdown()));
+                                    if (MyService.getCountdown() == 0) {
+                                        createMessage(getApplicationContext());
+                                        MyService.stopLifeGuard();
                                     }
                                 }
                             });
                         }
                     }, 0, 1000);
                 } else {
-                    stopService(new Intent(TestGiroscopio.this, MyService.class));
-                    Toast.makeText(getApplicationContext(), "Stopping service", Toast.LENGTH_LONG).show();
-                    textView.setText(null);
+                    MyService.stopLifeGuard();
+                    textView.setText("LifeGuard");
                 }
             }
         });
@@ -101,6 +109,39 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
 
     public static double getLastValue() {
         return TestGiroscopio.lastValue;
+    }
+
+    public void createMessage(Context context) {
+        Thread check10sec = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sleep(10000);
+                    Log.e("YOO", "L'utente non ha risposto");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        check10sec.start();
+        AlertDialog alertDialog = new AlertDialog.Builder(TestGiroscopio.this).create();
+        alertDialog.setTitle("LifeGuard");
+        alertDialog.setMessage("Are u ok?");
+        alertDialog.setButton(alertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check10sec.interrupt();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check10sec.interrupt();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override

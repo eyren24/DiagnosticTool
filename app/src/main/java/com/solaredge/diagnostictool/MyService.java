@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Timer;
@@ -48,26 +49,30 @@ public class MyService extends IntentService {
     }
     public static void stopLifeGuard(){
         lifeGuard = false;
+        countdown = 60;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         startLifeGuard();
         DBHandler dbHandler = new DBHandler(getApplicationContext());
-        Handler handler = new Handler();
+        Handler handler = new Handler(getMainLooper());
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
+                        if (!lifeGuard){
+                            countdown = 60;
+                            return;
+                        }
                         if (TestGiroscopio.lastValue <= 10 && TestGiroscopio.lastValue >= 8){
                             if (countdown == 0) return;
                             countdown--;
                         }else{
                             countdown = 60;
                         }
-
                         if (countdown == 0){
                             /// generate message box
                             dbHandler.addNewCourse(TestGiroscopio.lastValue, String.valueOf(Calendar.getInstance().getTime()));
