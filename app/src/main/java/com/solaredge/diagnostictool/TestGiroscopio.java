@@ -2,9 +2,12 @@ package com.solaredge.diagnostictool;
 
 import static java.lang.Thread.sleep;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,8 +16,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -43,6 +50,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private TextView emcall;
     private TextView textView;
     private MediaPlayer mp;
+    private Button addNumber;
+    private boolean soundAlert = false;
 
     private String phone = null;
 
@@ -55,10 +64,23 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         number = findViewById(R.id.editTextPhone);
         emcall = findViewById(R.id.call);
         textView = findViewById(R.id.textView);
+        addNumber = findViewById(R.id.Add);
+        addNumber.setEnabled(false);
 
-        number.setVisibility(View.INVISIBLE);
-        emcall.setVisibility(View.INVISIBLE);
+        ActivityCompat.requestPermissions(TestGiroscopio.this, new String[]{Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        addNumber.setOnClickListener( new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+               phone = number.getText().toString();
+                number.setVisibility(View.INVISIBLE);
+                emcall.setVisibility(View.INVISIBLE);
+                addNumber.setVisibility(View.INVISIBLE);
+            }
+        });
         if (!MyService.isServiceIsRunning()){
             startService(new Intent(TestGiroscopio.this, MyService.class));
         }
@@ -89,7 +111,32 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         }else{
             switchMaterial.setChecked(false);
         }
+        number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String n = String.valueOf(number.getText());
+                if(n.length()!=10){
+                    addNumber.setEnabled(false);
+                    emcall.setText("number not valid");
+                    emcall.setTextColor(Color.parseColor("#FF0000"));
+
+                }else{
+                    emcall.setText("number valid");
+                    emcall.setTextColor(Color.parseColor("#32FF00"));
+                    addNumber.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
 
@@ -98,11 +145,10 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (phone == null || phone.isEmpty()){
+                        switchMaterial.setChecked(false);
                         Toast.makeText(getApplicationContext(), "Insert a phone number before", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    number.setVisibility(View.VISIBLE);
-                    emcall.setVisibility(View.VISIBLE);
 
                     MyService.startLifeGuard();
                     Handler handler = new Handler();
@@ -113,6 +159,15 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                             handler.post(new Runnable() {
                                 public void run() {
                                     if(MyService.isLifeGuard()){
+                                        if(MyService.getCountdown()>30){
+                                            textView.setTextColor(Color.parseColor("#32FF00"));
+                                        }else{
+                                            if(MyService.getCountdown()>10){
+                                                textView.setTextColor(Color.parseColor("#E9FF00"));
+                                            }else{
+                                                textView.setTextColor(Color.parseColor("#FF0000"));
+                                            }
+                                        }
                                         textView.setText(String.valueOf(MyService.getCountdown()));
                                         if (MyService.getCountdown() == 0) {
                                             createMessage(getApplicationContext());
@@ -129,8 +184,6 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 } else {
                     MyService.stopLifeGuard();
                     textView.setText("LifeGuard");
-                    number.setVisibility(View.INVISIBLE);
-                    emcall.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -168,11 +221,20 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     }
 
     public void startSoundAlert(){
+        if(isSoundAlert()){
+            return;
+        }
+        soundAlert = true;
         mp = MediaPlayer.create(this, R.raw.alarm);
         mp.start();
     }
 
+    public boolean isSoundAlert(){
+        return soundAlert;
+    }
     public void stopSoundAlert(){
+        if (!isSoundAlert()) return;
+        soundAlert = false;
         mp.release();
     }
 
@@ -183,6 +245,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 try {
                     sleep(10000);
                     startSoundAlert();
+                    emergencyCall(phone);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -202,6 +265,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                emergencyCall(phone);
                 startSoundAlert();
                 check10sec.interrupt();
                 dialog.dismiss();
