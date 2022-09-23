@@ -9,11 +9,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,9 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private SwitchMaterial switchMaterial;
     protected static double lastValue = 0;
 
+    private MediaPlayer mp;
+    private EditText number;
+    private TextView emcall;
     private TextView textView;
 
     @Override
@@ -42,8 +47,13 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_test_giroscopio);
         switchMaterial = findViewById(R.id.switchMaterial);
 
+        mp = MediaPlayer.create(this, R.raw.alarm);
+        number = findViewById(R.id.editTextPhone);
+        emcall = findViewById(R.id.call);
         textView = findViewById(R.id.textView);
 
+        number.setVisibility(View.INVISIBLE);
+        emcall.setVisibility(View.INVISIBLE);
         if (!MyService.isServiceIsRunning()){
             startService(new Intent(TestGiroscopio.this, MyService.class));
         }
@@ -79,6 +89,9 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    number.setVisibility(View.VISIBLE);
+                    emcall.setVisibility(View.VISIBLE);
+
                     MyService.startLifeGuard();
                     Handler handler = new Handler();
                     Timer timer = new Timer();
@@ -104,6 +117,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 } else {
                     MyService.stopLifeGuard();
                     textView.setText("LifeGuard");
+                    number.setVisibility(View.INVISIBLE);
+                    emcall.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -201,5 +216,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+    public void DANGER(){
+        mp.start();
     }
 }
