@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -71,21 +70,21 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        addNumber.setOnClickListener( new View.OnClickListener() {
+        addNumber.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-               phone = number.getText().toString();
+                phone = number.getText().toString();
                 number.setVisibility(View.INVISIBLE);
                 emcall.setVisibility(View.INVISIBLE);
                 addNumber.setVisibility(View.INVISIBLE);
             }
         });
-        if (!MyService.isServiceIsRunning()){
+        if (!MyService.isServiceIsRunning()) {
             startService(new Intent(TestGiroscopio.this, MyService.class));
         }
 
-        if (MyService.isLifeGuard()){
+        if (MyService.isLifeGuard()) {
             Handler handler = new Handler();
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -93,14 +92,22 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 public void run() {
                     handler.post(new Runnable() {
                         public void run() {
-                            if(MyService.isLifeGuard()){
+                            if (MyService.isLifeGuard()) {
+                                if (MyService.getCountdown() > 30) {
+                                    textView.setTextColor(Color.GREEN);
+                                } else if (MyService.getCountdown() > 10) {
+                                    textView.setTextColor(Color.YELLOW);
+                                } else {
+                                    textView.setTextColor(Color.RED);
+                                }
                                 textView.setText(String.valueOf(MyService.getCountdown()));
                                 if (MyService.getCountdown() == 0) {
+                                    textView.setTextColor(Color.WHITE);
                                     createMessage(getApplicationContext());
                                     MyService.stopLifeGuard();
                                     switchMaterial.setChecked(false);
                                 }
-                            }else {
+                            } else {
                                 textView.setText("LifeGuard");
                             }
                         }
@@ -108,7 +115,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                 }
             }, 0, 1000);
             switchMaterial.setChecked(true);
-        }else{
+        } else {
             switchMaterial.setChecked(false);
         }
         number.addTextChangedListener(new TextWatcher() {
@@ -120,14 +127,14 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String n = String.valueOf(number.getText());
-                if(n.length()!=10){
+                if (n.length() != 10) {
                     addNumber.setEnabled(false);
                     emcall.setText("number not valid");
-                    emcall.setTextColor(Color.parseColor("#FF0000"));
+                    emcall.setTextColor(Color.RED);
 
-                }else{
+                } else {
                     emcall.setText("number valid");
-                    emcall.setTextColor(Color.parseColor("#32FF00"));
+                    emcall.setTextColor(Color.GREEN);
                     addNumber.setEnabled(true);
                 }
             }
@@ -139,12 +146,11 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         });
 
 
-
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (phone == null || phone.isEmpty()){
+                    if (phone == null || phone.isEmpty()) {
                         switchMaterial.setChecked(false);
                         Toast.makeText(getApplicationContext(), "Insert a phone number before", Toast.LENGTH_LONG).show();
                         return;
@@ -158,23 +164,22 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         public void run() {
                             handler.post(new Runnable() {
                                 public void run() {
-                                    if(MyService.isLifeGuard()){
-                                        if(MyService.getCountdown()>30){
-                                            textView.setTextColor(Color.parseColor("#32FF00"));
-                                        }else{
-                                            if(MyService.getCountdown()>10){
-                                                textView.setTextColor(Color.parseColor("#E9FF00"));
-                                            }else{
-                                                textView.setTextColor(Color.parseColor("#FF0000"));
-                                            }
+                                    if (MyService.isLifeGuard()) {
+                                        if (MyService.getCountdown() > 30) {
+                                            textView.setTextColor(Color.GREEN);
+                                        } else if (MyService.getCountdown() > 10) {
+                                            textView.setTextColor(Color.YELLOW);
+                                        } else {
+                                            textView.setTextColor(Color.RED);
                                         }
                                         textView.setText(String.valueOf(MyService.getCountdown()));
                                         if (MyService.getCountdown() == 0) {
+                                            textView.setTextColor(Color.WHITE);
                                             createMessage(getApplicationContext());
                                             MyService.stopLifeGuard();
                                             switchMaterial.setChecked(false);
                                         }
-                                    }else {
+                                    } else {
                                         textView.setText("LifeGuard");
                                     }
                                 }
@@ -182,13 +187,16 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
                         }
                     }, 0, 1000);
                 } else {
+                    textView.setTextColor(Color.WHITE);
                     MyService.stopLifeGuard();
                     textView.setText("LifeGuard");
                 }
             }
         });
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager)
+
+                getSystemService(SENSOR_SERVICE);
 
         if (sensorManager != null) {
             Sensor acceleroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -201,7 +209,9 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             Toast.makeText(getApplicationContext(), "Sensor service not detected.", Toast.LENGTH_LONG).show();
         }
 
-        extendedFab = findViewById(R.id.extended_fab);
+        extendedFab =
+
+                findViewById(R.id.extended_fab);
         extendedFab.shrink();
         extendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,8 +230,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         });
     }
 
-    public void startSoundAlert(){
-        if(isSoundAlert()){
+    public void startSoundAlert() {
+        if (isSoundAlert()) {
             return;
         }
         soundAlert = true;
@@ -229,10 +239,11 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         mp.start();
     }
 
-    public boolean isSoundAlert(){
+    public boolean isSoundAlert() {
         return soundAlert;
     }
-    public void stopSoundAlert(){
+
+    public void stopSoundAlert() {
         if (!isSoundAlert()) return;
         soundAlert = false;
         mp.release();
@@ -282,8 +293,8 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         //super.onBackPressed();
     }
 
-    public void emergencyCall(@NotNull String phone){
-        String s = "tel:"+phone;
+    public void emergencyCall(@NotNull String phone) {
+        String s = "tel:" + phone;
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse(s));
         startActivity(intent);
