@@ -1,39 +1,21 @@
 package com.solaredge.diagnostictool;
 
 import android.app.IntentService;
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import java.net.Inet4Address;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MyService extends IntentService {
 
     protected static boolean lifeGuard = false;
 
-    private static boolean hasStarted = false;
+    private static int countdown = 60;
 
     public static volatile boolean shouldStop = false;
-
-    private DBHandler dbHandler;
-
-    public static boolean isHasStarted() {
-        return hasStarted;
-    }
-
-    public static void setHasStarted(boolean hasStarted) {
-        MyService.hasStarted = hasStarted;
-    }
 
     public static boolean isLifeGuard() {
         return lifeGuard;
@@ -52,24 +34,51 @@ public class MyService extends IntentService {
         return null;
     }
 
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String inc = intent.getStringExtra("value");
-            dbHandler.addNewCourse(inc, String.valueOf(Calendar.getInstance().getTime()));
-        }
-    };
+
+    public static int getCountdown() {
+        return countdown;
+    }
+
+    public static void setCountdown(int countdown) {
+        MyService.countdown = countdown;
+    }
+
+    public static void startLifeGuard(){
+        lifeGuard = true;
+    }
+    public static void stopLifeGuard(){
+        lifeGuard = false;
+    }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        dbHandler = new DBHandler(getApplicationContext());
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.solaredge.diagnostictool");
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+        startLifeGuard();
+        DBHandler dbHandler = new DBHandler(getApplicationContext());
+        Handler handler = new Handler();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        if (TestGiroscopio.lastValue <= 10 && TestGiroscopio.lastValue >= 8){
+                            if (countdown == 0) return;
+                            countdown--;
+                        }else{
+                            countdown = 60;
+                        }
+
+                        if (countdown == 0){
+                            /// generate message box
+                            dbHandler.addNewCourse(TestGiroscopio.lastValue, String.valueOf(Calendar.getInstance().getTime()));
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
+
         if(shouldStop) {
-            unregisterReceiver(broadcastReceiver);
             stopSelf();
-            return;
         }
     }
 }

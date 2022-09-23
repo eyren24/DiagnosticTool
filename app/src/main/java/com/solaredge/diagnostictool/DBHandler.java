@@ -31,13 +31,13 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + VALUE_COL + " TEXT,"
+                + VALUE_COL + " DOUBLE,"
                 + TIME_COL + " TEXT)";
         db.execSQL(query);
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewCourse(String value, String time) {
+    public void addNewCourse(double value, String time) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
