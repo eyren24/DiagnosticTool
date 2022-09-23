@@ -90,6 +90,9 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             switchMaterial.setChecked(false);
         }
 
+
+
+
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
