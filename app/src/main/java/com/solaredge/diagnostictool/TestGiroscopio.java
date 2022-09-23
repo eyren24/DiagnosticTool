@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,10 +39,12 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     private SwitchMaterial switchMaterial;
     protected static double lastValue = 0;
 
-    private MediaPlayer mp;
     private EditText number;
     private TextView emcall;
     private TextView textView;
+    private MediaPlayer mp;
+
+    private String phone = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +52,13 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_test_giroscopio);
         switchMaterial = findViewById(R.id.switchMaterial);
 
-        mp = MediaPlayer.create(this, R.raw.alarm);
         number = findViewById(R.id.editTextPhone);
         emcall = findViewById(R.id.call);
         textView = findViewById(R.id.textView);
 
         number.setVisibility(View.INVISIBLE);
         emcall.setVisibility(View.INVISIBLE);
+
         if (!MyService.isServiceIsRunning()){
             startService(new Intent(TestGiroscopio.this, MyService.class));
         }
@@ -89,6 +94,10 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    if (phone == null || phone.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Insert a phone number before", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     number.setVisibility(View.VISIBLE);
                     emcall.setVisibility(View.VISIBLE);
 
@@ -155,13 +164,22 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         });
     }
 
+    public void startSoundAlert(){
+        mp = MediaPlayer.create(this, R.raw.alarm);
+        mp.start();
+    }
+
+    public void stopSoundAlert(){
+        mp.release();
+    }
+
     public void createMessage(Context context) {
         Thread check10sec = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     sleep(10000);
-                    Log.e("YOO", "L'utente non ha risposto");
+                    startSoundAlert();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -181,6 +199,7 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                startSoundAlert();
                 check10sec.interrupt();
                 dialog.dismiss();
             }
@@ -190,12 +209,21 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
 
     @Override
     public void onBackPressed() {
+        stopSoundAlert();
         goToHome();
         finish();
         //super.onBackPressed();
     }
 
+    public void emergencyCall(@NotNull String phone){
+        String s = "tel:"+phone;
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(s));
+        startActivity(intent);
+    }
+
     private void goToHome() {
+        stopSoundAlert();
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
@@ -217,7 +245,5 @@ public class TestGiroscopio extends AppCompatActivity implements SensorEventList
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-    public void DANGER(){
-        mp.start();
-    }
+
 }
