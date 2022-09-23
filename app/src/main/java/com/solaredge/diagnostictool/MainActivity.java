@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +24,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setSelected(false);
         mNavigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        Toast.makeText(getApplicationContext(), "You are alreay at home!", Toast.LENGTH_LONG).show();
+                        return true;
+                    case R.id.history:
+                        gotoHistory();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
     private void updateNavigationBarState(int actionId){
@@ -79,12 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 goToPowerButtonCheck();
                 finish();
                 break;
-            case R.id.history:
-                Toast.makeText(getApplicationContext(), "Coming soon!", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.home:
-                Toast.makeText(getApplicationContext(), "Home!", Toast.LENGTH_LONG).show();
-                break;
             default:
                 return false;
         }
@@ -104,45 +114,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void goToCamera() {
         Intent switchActivityIntent = new Intent(this, TestFotocamera.class);
         startActivity(switchActivityIntent);
+        finish();
+    }
+
+
+    private void gotoHistory() {
+        Intent switchActivityIntent = new Intent(this, History.class);
+        startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToGiroscopio() {
         Intent switchActivityIntent = new Intent(this, TestGiroscopio.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToAccelerometro() {
         Intent switchActivityIntent = new Intent(this, TestAccellerometro.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToSensoreDiProssimita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiProssimita.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToFingerprintSensor() {
         Intent switchActivityIntent = new Intent(this, TestFingerPrint.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToSensoreDiLuminosita() {
         Intent switchActivityIntent = new Intent(this, TestSensoreDiLuminosita.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToTermometro() {
         Intent switchActivityIntent = new Intent(this, TestTermometro.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToMagnetometer() {
         Intent switchActivityIntent = new Intent(this, TestMagnetometer.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 
     private void goToPowerButtonCheck() {
         Intent switchActivityIntent = new Intent(this, TestPowerButton.class);
         startActivity(switchActivityIntent);
+        finish();
     }
 }

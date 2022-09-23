@@ -2,8 +2,12 @@ package com.solaredge.diagnostictool;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -57,6 +61,36 @@ public class DBHandler extends SQLiteOpenHelper {
         // at last we are closing our
         // database after adding database.
         db.close();
+    }
+
+    public List<String> getAllAlert() {
+        List<String> posts = new ArrayList<>();
+
+        // SELECT * FROM POSTS
+        // LEFT OUTER JOIN USERS
+        // ON POSTS.KEY_POST_USER_ID_FK = USERS.KEY_USER_ID
+        String POSTS_SELECT_QUERY =
+                String.format("SELECT * FROM sensoAlert");
+
+        // "getReadableDatabase()" and "getWriteableDatabase()" return the same object (except under low
+        // disk space scenarios)
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(POSTS_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String linee = cursor.getInt(0) + "\t" + cursor.getDouble(1) + "\t" + cursor.getString(2);
+                    posts.add(linee);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return posts;
     }
 
     @Override
